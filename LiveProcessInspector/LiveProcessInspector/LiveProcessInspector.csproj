@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,13 +34,31 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>LiveProcessInspector.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\packages\Caliburn.Micro-Contrib.1.0.2\lib\Net40\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Contrib">
+      <HintPath>..\packages\Caliburn.Micro-Contrib.1.0.2\lib\Net40\Caliburn.Micro.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="DesignTimeProperties.WPF">
+      <HintPath>..\packages\Caliburn.Micro-Contrib.1.0.2\lib\Net40\DesignTimeProperties.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Diagnostics.Runtime">
+      <HintPath>..\packages\Microsoft.Diagnostics.Runtime.0.8.27-beta\lib\net40\Microsoft.Diagnostics.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro-Contrib.1.0.2\lib\Net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,20 +76,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="AvaliableProcessesView.xaml.cs">
+      <DependentUpon>AvaliableProcessesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AvaliableProcessesViewModel.cs" />
+    <Compile Include="GeneralScreenView.xaml.cs">
+      <DependentUpon>GeneralScreenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralScreeViewModel.cs" />
+    <Compile Include="InspectorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -87,6 +109,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,7 +118,48 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Page Include="AvaliableProcessesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GeneralScreenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ClearOutputWindow.png" />
+    <Resource Include="Icons\FileBrowser.png" />
+    <Resource Include="Icons\Folder.Closed.png" />
+    <Resource Include="Icons\Folder.Open.png" />
+    <Resource Include="Icons\Icons.16x16.Assembly.png" />
+    <Resource Include="Icons\Icons.16x16.CommentRegion.png" />
+    <Resource Include="Icons\Icons.16x16.CopyIcon.png" />
+    <Resource Include="Icons\Icons.16x16.CSFile.png" />
+    <Resource Include="Icons\Icons.16x16.CutIcon.png" />
+    <Resource Include="Icons\Icons.16x16.DeleteIcon.png" />
+    <Resource Include="Icons\Icons.16x16.FindIcon.png" />
+    <Resource Include="Icons\Icons.16x16.Indent.png" />
+    <Resource Include="Icons\Icons.16x16.MiscFiles.png" />
+    <Resource Include="Icons\Icons.16x16.PasteIcon.png" />
+    <Resource Include="Icons\Icons.16x16.Property.png" />
+    <Resource Include="Icons\Icons.16x16.RedoIcon.png" />
+    <Resource Include="Icons\Icons.16x16.Reference.png" />
+    <Resource Include="Icons\Icons.16x16.ReferenceModule.png" />
+    <Resource Include="Icons\Icons.16x16.RunAllIcon.png" />
+    <Resource Include="Icons\Icons.16x16.RunProgramIcon.png" />
+    <Resource Include="Icons\Icons.16x16.SaveAllIcon.png" />
+    <Resource Include="Icons\Icons.16x16.SaveIcon.png" />
+    <Resource Include="Icons\Icons.16x16.TextFileIcon.png" />
+    <Resource Include="Icons\Icons.16x16.UndoIcon.png" />
+    <Resource Include="Icons\Icons.16x16.XMLFileIcon.png" />
+    <Resource Include="Icons\Open.png" />
+    <Resource Include="Icons\Output.png" />
+    <Resource Include="Icons\page_go.png" />
+    <Resource Include="Icons\page_white_go.png" />
+    <Resource Include="Icons\ReferenceFolder.Closed.png" />
+    <Resource Include="Icons\ReferenceFolder.Open.png" />
+    <Resource Include="Icons\Toolbar.Refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

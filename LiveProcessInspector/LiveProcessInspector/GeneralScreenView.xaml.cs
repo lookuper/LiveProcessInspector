@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace LiveProcessInspector
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GeneralView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GeneralScreenView : UserControl
     {
-        public MainWindow()
+        public GeneralScreenView()
         {
             InitializeComponent();
         }
