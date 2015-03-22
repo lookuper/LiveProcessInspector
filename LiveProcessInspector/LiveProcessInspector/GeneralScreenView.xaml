@@ -17,18 +17,16 @@
                 <Button cal:Message.Attach="[Event Click] = [Action OpenDump()]">
                     <Image Source="Icons/Folder.Open.png" ToolTip="Tip"></Image>
                 </Button>
+				<Button cal:Message.Attach="[Event Click] = [Action OpenDataTarget()]">
+                    <Image Source="Icons/FileBrowser.png" ToolTip="Tip"></Image>
+                </Button>
             </ToolBar>
         </ToolBarPanel>
         
         <StatusBar DockPanel.Dock="Bottom" Height="25" >
             
         </StatusBar>
-        
-        <TextBlock Text="AAA">
-            
-        </TextBlock>
-        
 
-        
+		<ContentControl x:Name="ActiveItem"></ContentControl>            
     </DockPanel>
 </UserControl>

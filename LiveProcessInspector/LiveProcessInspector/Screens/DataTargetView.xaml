@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="LiveProcessInspector.Screens.DataTargetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 			 
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+             xmlns:local="clr-namespace:LiveProcessInspector.Screens"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+	<Grid x:Name="root">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>	
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="170"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		
+		<Label Grid.Row="0" Grid.Column="0" Content="Architecture:"/>
+		<Label Grid.Row="1" Grid.Column="0" Content="Is mini dump:"/>
+		<Label Grid.Row="2" Grid.Column="0" Content="Pointer size:"/>
+		<Label Grid.Row="3" Grid.Column="0" Content="CLR Versions:"/>
+		<Label x:Name="lastLable" Grid.Row="4" Grid.Column="0" Content="Modules:"/>
+		
+		<Label Grid.Row="0" Grid.Column="1" x:Name="Architecture"/>
+		<Label Grid.Row="1" Grid.Column="1" x:Name="IsMiniDump"/>
+		<Label Grid.Row="2" Grid.Column="1" x:Name="PointerSize"/>
+		<ListView Grid.Row="3" Grid.Column="1" x:Name="ClrVersion"
+				  cal:Message.Attach="[Event MouseDoubleClick] = [Action OpenDacLocation(ClrVersion.SelectedItem)]">
+			<ListView.View>
+				<GridView>
+					<GridView.Columns>
+						<GridViewColumn Header="Flavor" DisplayMemberBinding="{Binding Flavor}"/>
+						<GridViewColumn Header="Version" DisplayMemberBinding="{Binding Version}"/>
+						<GridViewColumn Header="Dac Info" DisplayMemberBinding="{Binding DacInfo}"/>
+						<GridViewColumn Header="File Size" DisplayMemberBinding="{Binding DacInfo.FileSize}"/>
+						<GridViewColumn Header="Pdb" DisplayMemberBinding="{Binding DacInfo.Pdb, TargetNullValue=False}"/>
+					</GridView.Columns>
+				</GridView>
+			</ListView.View>
+		</ListView>
+		<ListView Grid.Row="4" Grid.Column="1"
+				  MaxWidth="{Binding ElementName=ClrVersion, Path=ActualWidth}"				  
+				  MaxHeight="{Binding ElementName=lastLable, Path=ActualHeight}"
+				  cal:Message.Attach="[Event MouseDoubleClick] = [Action OpenModuleLocation(Modules.SelectedItem)]"
+				  x:Name="Modules">			
+			<ListView.View>				
+				<GridView>
+					<GridView.Columns>
+						<GridViewColumn Header="Module Name" DisplayMemberBinding="{Binding FileName}"/>
+						<GridViewColumn Header="Version" DisplayMemberBinding="{Binding Version}"/>
+						<GridViewColumn Header="Pdb" DisplayMemberBinding="{Binding Pdb.FileName, TargetNullValue=False}"/>
+					</GridView.Columns>
+				</GridView>
+			</ListView.View>
+		</ListView>
+	</Grid>
+</UserControl>

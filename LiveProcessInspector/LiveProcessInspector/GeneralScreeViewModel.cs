@@ -1,11 +1,14 @@
 ﻿using Caliburn.Micro;
+using LiveProcessInspector.Screens;
 using Microsoft.Diagnostics.Runtime;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,10 +16,12 @@ using System.Windows;
 namespace LiveProcessInspector
 {
     [Export(typeof(GeneralScreenViewModel))]
-    public class GeneralScreenViewModel : PropertyChangedBase
+    public class GeneralScreenViewModel : Conductor<Object>
     {
-        private readonly InspectorModel model = new InspectorModel();
+        private readonly InspectorModel _model = new InspectorModel();
         private readonly IWindowManager _windowManager;
+		private DataTarget _dataTarget;
+		private ClrRuntime _clrRuntime;
 
         [ImportingConstructor]
         public GeneralScreenViewModel(IWindowManager windowManager)
@@ -24,7 +29,34 @@ namespace LiveProcessInspector
             _windowManager = windowManager;
         }
 
-        public void OpenDump()
+		public void OpenDataTarget()
+		{
+			if (_dataTarget == null)
+				OpenDump();
+
+			var viewModel = new DataTargetViewModel(_dataTarget);
+			ActivateItem(viewModel);
+		}
+
+		public void OpenClrRuntime()
+		{
+			if (_dataTarget == null)
+				throw new ArgumentNullException("_dataTarget");
+
+			var clrVersion = _dataTarget.ClrVersions.FirstOrDefault();
+			if (clrVersion == null)
+				throw new ArgumentNullException("clrVersion");
+
+			_clrRuntime = _dataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
+		}
+
+		protected override void OnDeactivate(bool close)
+		{
+			using (_dataTarget) { }
+			base.OnDeactivate(close);
+		}
+
+		public void OpenDump()
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Dump files (*.dmp)|*.dmp";
@@ -41,23 +73,45 @@ namespace LiveProcessInspector
             //    return;
             //}
 
-            path = @"C:\Users\Maksym.Chernenko\Desktop\SnippetStoreMini.dmp";
-            DataTarget target;
+            path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMini.dmp";
+			//path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMiniNotebook.dmp";
 
-            if (model.TryToOpenDump(path, out target))
+			if (_model.TryToOpenDump(path, out _dataTarget))
             {
-				var location = target.ClrVersions[0].TryGetDacLocation();
-				var locationFromNet = target.ClrVersions[0].TryDownloadDac();
+				var location = _dataTarget.ClrVersions[0].TryGetDacLocation();
+				var locationFromNet = _dataTarget.ClrVersions[0].TryDownloadDac();
 				try
 				{
-                    var runtime = target.CreateRuntime(location);
+                    var runtime = _dataTarget.CreateRuntime(location ?? locationFromNet);
+
+
+
+					var i = 6;
 				}
 				catch (ClrDiagnosticsException ex)
 				{
-					var runtime = target.CreateRuntime(location);
+
+					var dacs = Directory.GetFiles(@"C:\Users\Maksym.Chernenko\Desktop\dacs");
+
+					foreach (var dac in dacs)
+					{
+						try
+						{
+							_dataTarget.CreateRuntime(dac);
+						}
+
+						catch (ClrDiagnosticsException ex2)
+						{
+							var i = 5;
+						}
+					}
+
+					//var runtime = _dataTarget.CreateRuntime(@"C:\Users\Maksym.Chernenko\Desktop\mscordacwks_x86_x86_4.0.30319.1008.dll");
+
+					//var runtime = _dataTarget.CreateRuntime(@"C:\Users\Maksym.Chernenko\Desktop\v4.0.30319\mscordacwks_amd64_Amd64_4.0.30319.1008.dll");
 				}
-                //target.CreateRuntime(@"C:\Windows\Microsoft.NET\Framework64\v2.0.50727\mscordacwks.dll");
-            }
+				//target.CreateRuntime(@"C:\Windows\Microsoft.NET\Framework64\v2.0.50727\mscordacwks.dll");
+			}
         }
 
 
@@ -73,11 +127,10 @@ namespace LiveProcessInspector
 
             if (res.HasValue && res.Value)
             {
-                DataTarget target;
-                if (model.TryToAttach(avaliableProcessModel.SelectedProcess, out target))
+                if (_model.TryToAttach(avaliableProcessModel.SelectedProcess, out _dataTarget))
                 {
-                    var location = target.ClrVersions[0].TryGetDacLocation();
-                    var runtime = target.CreateRuntime(location);
+                    var location = _dataTarget.ClrVersions[0].TryGetDacLocation();
+                    //var runtime = _dataTarget.CreateRuntime(location);
                 }
 
             }
