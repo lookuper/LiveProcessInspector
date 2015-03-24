@@ -27,7 +27,18 @@ namespace LiveProcessInspector
         public GeneralScreenViewModel(IWindowManager windowManager)
         {
             _windowManager = windowManager;
+			OpenClrRuntime();
         }
+
+		public bool IsDataTargetAvaliable
+		{
+            get { return _dataTarget != null; }
+		}
+
+		public bool IsRuntimeAvalible
+		{
+			get { return _clrRuntime != null; }
+		}
 
 		public void OpenDataTarget()
 		{
@@ -40,6 +51,7 @@ namespace LiveProcessInspector
 
 		public void OpenClrRuntime()
 		{
+			OpenDump(); // to speed up development
 			if (_dataTarget == null)
 				throw new ArgumentNullException("_dataTarget");
 
@@ -47,7 +59,11 @@ namespace LiveProcessInspector
 			if (clrVersion == null)
 				throw new ArgumentNullException("clrVersion");
 
-			_clrRuntime = _dataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
+			if (_clrRuntime == null)
+				_clrRuntime = _dataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
+
+			var viewModel = new ClrRuntimeViewModel(_clrRuntime);
+			ActivateItem(viewModel);
 		}
 
 		protected override void OnDeactivate(bool close)
@@ -57,62 +73,39 @@ namespace LiveProcessInspector
 		}
 
 		public void OpenDump()
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Dump files (*.dmp)|*.dmp";
-            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Dump files (*.dmp)|*.dmp";
+			dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            string path;
-            //var res = dlg.ShowDialog();
+			string path;
+			//var res = dlg.ShowDialog();
 
-            //if (res.HasValue && res.Value)
-            //    path = dlg.FileName;
-            //else
-            //{
-            //    //MessageBox.Show("Cannot find such file");
-            //    return;
-            //}
+			//if (res.HasValue && res.Value)
+			//    path = dlg.FileName;
+			//else
+			//{
+			//    //MessageBox.Show("Cannot find such file");
+			//    return;
+			//}
 
-            path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMini.dmp";
+			path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMini.dmp";
 			//path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMiniNotebook.dmp";
 
 			if (_model.TryToOpenDump(path, out _dataTarget))
-            {
+			{
 				var location = _dataTarget.ClrVersions[0].TryGetDacLocation();
 				var locationFromNet = _dataTarget.ClrVersions[0].TryDownloadDac();
+
+				// refactor
 				try
 				{
-                    var runtime = _dataTarget.CreateRuntime(location ?? locationFromNet);
-
-
-
-					var i = 6;
+					_clrRuntime = _dataTarget.CreateRuntime(location ?? locationFromNet);
 				}
 				catch (ClrDiagnosticsException ex)
-				{
-
-					var dacs = Directory.GetFiles(@"C:\Users\Maksym.Chernenko\Desktop\dacs");
-
-					foreach (var dac in dacs)
-					{
-						try
-						{
-							_dataTarget.CreateRuntime(dac);
-						}
-
-						catch (ClrDiagnosticsException ex2)
-						{
-							var i = 5;
-						}
-					}
-
-					//var runtime = _dataTarget.CreateRuntime(@"C:\Users\Maksym.Chernenko\Desktop\mscordacwks_x86_x86_4.0.30319.1008.dll");
-
-					//var runtime = _dataTarget.CreateRuntime(@"C:\Users\Maksym.Chernenko\Desktop\v4.0.30319\mscordacwks_amd64_Amd64_4.0.30319.1008.dll");
-				}
-				//target.CreateRuntime(@"C:\Windows\Microsoft.NET\Framework64\v2.0.50727\mscordacwks.dll");
+				{ }
 			}
-        }
+		}
 
 
         public void AttachToProcess()

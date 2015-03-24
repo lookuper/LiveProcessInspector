@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="LiveProcessInspector.Screens.ClrRuntimeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LiveProcessInspector.Screens"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="700">
+    <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		
+		<Border BorderBrush="Black" BorderThickness="1"/>
+		<Grid Grid.Column="0" >
+			
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>	
+				<RowDefinition Height="Auto"/>	
+				<RowDefinition Height="Auto"/>	
+				<RowDefinition Height="Auto"/>	
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="3*"/>
+				<ColumnDefinition Width="7*"/>
+			</Grid.ColumnDefinitions>
+			
+			
+			<Label Grid.Row="0" Grid.Column="0" Content="Server GC:"/>
+			<Label Grid.Row="0" Grid.Column="1" x:Name="IsServerGC"/>
+				   
+			<Label Grid.Row="1" Grid.Column="0" Content="Pointer Size:"/>
+			<Label Grid.Row="1" Grid.Column="1" x:Name="PointerSize"/>
+			
+			<Label Grid.Row="2" Grid.Column="0" Content="Heap Count:"/>
+			<Label Grid.Row="2" Grid.Column="1" x:Name="HeadCount"/>	
+			
+			<Label Grid.Row="3" Grid.Column="0" Content="App Domains:"/>
+			<ListView Grid.Row="3" Grid.Column="1" x:Name="AppDomains">
+				<ListView.View>
+					<GridView>
+						<GridView.Columns>
+							<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+							<GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+							<GridViewColumn Header="Configuration File" DisplayMemberBinding="{Binding ConfigurationFile}"/>
+						</GridView.Columns>
+					</GridView>
+				</ListView.View>
+			</ListView>
+
+			<Label Grid.Row="4" Grid.Column="0" Content="Threads:"/>
+			<ListView Grid.Row="4" Grid.Column="1" x:Name="Threads" HorizontalAlignment="Stretch">
+				<ListView.View>
+					<GridView>
+						<GridView.Columns>
+							<GridViewColumn Header="Managed Thread Id" DisplayMemberBinding="{Binding ManagedThreadId}" />
+							<GridViewColumn Header="OS Thread Id" DisplayMemberBinding="{Binding OSThreadId}"/>
+							<GridViewColumn Header="Is Alive" DisplayMemberBinding="{Binding IsAlive}"/>
+							<GridViewColumn Header="Is STA" DisplayMemberBinding="{Binding IsSTA}" />
+							
+							
+						</GridView.Columns>
+					</GridView>
+				</ListView.View>
+			</ListView>
+			
+			<Label Grid.Row="5" Grid.Column="0"  Content="Pool Threads:"/>
+			<Label Grid.Row="5" Grid.Column="1" x:Name="PoolThreads"/>
+			
+			<Label Grid.Row="6" Grid.Column="0"  Content="Running Threads:"/>
+			<Label Grid.Row="6" Grid.Column="1" x:Name="RunninPoolThreads"/>
+				
+			
+		</Grid>
+		
+		<Grid Grid.Column="1">
+			<StackPanel>
+				<Expander Header="Selected Thread">
+				</Expander>
+				<Expander Header="Object Heap"></Expander>
+			</StackPanel>
+		</Grid>
+    </Grid>
+</UserControl>

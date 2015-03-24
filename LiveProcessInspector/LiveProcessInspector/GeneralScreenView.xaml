@@ -17,7 +17,11 @@
                 <Button cal:Message.Attach="[Event Click] = [Action OpenDump()]">
                     <Image Source="Icons/Folder.Open.png" ToolTip="Tip"></Image>
                 </Button>
-				<Button cal:Message.Attach="[Event Click] = [Action OpenDataTarget()]">
+				<Separator/>
+				<Button IsEnabled="{Binding IsDataTargetAvaliable!}"  cal:Message.Attach="[Event Click] = [Action OpenDataTarget()]">
+                    <Image Source="Icons/FileBrowser.png" ToolTip="Tip"></Image>
+                </Button>
+				<Button IsEnabled="{Binding IsRuntimeAvalible!}"  cal:Message.Attach="[Event Click] = [Action OpenClrRuntime()]">
                     <Image Source="Icons/FileBrowser.png" ToolTip="Tip"></Image>
                 </Button>
             </ToolBar>

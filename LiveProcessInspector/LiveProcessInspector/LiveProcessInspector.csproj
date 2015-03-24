@@ -88,6 +88,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Screens\ClrRuntimeView.xaml.cs">
+      <DependentUpon>ClrRuntimeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ClrRuntimeViewModel.cs" />
     <Compile Include="Screens\DataTargetView.xaml.cs">
       <DependentUpon>DataTargetView.xaml</DependentUpon>
     </Compile>
@@ -135,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GeneralScreenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\ClrRuntimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
