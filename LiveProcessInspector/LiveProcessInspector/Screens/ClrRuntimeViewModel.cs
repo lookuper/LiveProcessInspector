@@ -13,12 +13,10 @@ namespace LiveProcessInspector.Screens
 	public class ClrRuntimeViewModel : PropertyChangedBase
 	{
 		private readonly ClrRuntime _runtime;
-		private ClrThreadPool _threadPool;
 
 		public ClrRuntimeViewModel(ClrRuntime runtime)
 		{
 			_runtime = runtime;
-			_threadPool = _runtime.GetThreadPool();
 		}
 
 		public bool IsServerGC { get { return _runtime.ServerGC; } }
@@ -26,10 +24,7 @@ namespace LiveProcessInspector.Screens
 		public int HeadCount { get { return _runtime.HeapCount; } }
 		public IEnumerable<ClrAppDomain> AppDomains { get { return _runtime.AppDomains; } }
 		public IList<ClrThread> Threads { get { return _runtime.Threads; } }
-		//public ClrThreadPool ThreadPool { get { return _runtime.GetThreadPool(); } }
-		public int PoolThreads { get { return _threadPool.TotalThreads; } }
-		public int RunninPoolThreads { get { return _threadPool.RunningThreads; } }
-
+		public ClrThreadPool ThreadPool { get { return _runtime.GetThreadPool(); } }
 
 		private ClrThread _selectedThread = null;
 		public ClrThread SelectedThread

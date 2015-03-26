@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LiveProcessInspector.Screens"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
-    <Grid>
+    <Grid Name="root">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
@@ -67,20 +67,12 @@
 						</GridView.Columns>
 					</GridView>
 				</ListView.View>
-			</ListView>
-			
-			<Label Grid.Row="5" Grid.Column="0"  Content="Pool Threads:"/>
-			<Label Grid.Row="5" Grid.Column="1" x:Name="PoolThreads"/>
-			
-			<Label Grid.Row="6" Grid.Column="0"  Content="Running Threads:"/>
-			<Label Grid.Row="6" Grid.Column="1" x:Name="RunninPoolThreads"/>
-				
-			
+			</ListView>				
 		</Grid>
 		
 		<Grid Grid.Column="1">
 			<StackPanel>
-				<Expander Header="Selected Thread">
+				<Expander Header="Selected Thread" IsExpanded="True">
 					<Grid DataContext="{Binding ElementName=Threads, Path=SelectedItem}">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
@@ -95,7 +87,7 @@
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="2*"/>
+							<ColumnDefinition Width="3*"/>
 							<ColumnDefinition Width="5*"/>
 						</Grid.ColumnDefinitions>
 						
@@ -106,7 +98,7 @@
 						<Label Grid.Row="1" Grid.Column="1" Content="{Binding IsSTA}"/>		
 						
 						<Label Grid.Row="2" Grid.Column="0" Content="Current Exception:"/>
-						<Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentException}"/>	
+						<Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentException, TargetNullValue=None}"/>	
 						
 						<Label Grid.Row="4" Grid.Column="0" Content="Abort Requested:"/>
 						<Label Grid.Row="4" Grid.Column="1" Content="{Binding IsAbortRequested}"/>	
@@ -128,6 +120,53 @@
 					</Grid>
 				</Expander>
 				<Expander Header="Object Heap"></Expander>
+				<Expander Header="Thread Pool">
+					<Grid DataContext="{Binding ThreadPool}">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="3*"/>
+							<ColumnDefinition Width="5*"/>
+						</Grid.ColumnDefinitions>
+						
+						<Label Grid.Row="0" Grid.Column="0" Content="Cpu Utilization:"/>
+						<Label Grid.Row="0" Grid.Column="1" Content="{Binding CpuUtilization}"/>
+						
+						<Label Grid.Row="1" Grid.Column="0" Content="Complition Port Count:"/>
+						<Label Grid.Row="1" Grid.Column="1" Content="{Binding FreeCompletionPortCount}"/>	
+						
+						<Label Grid.Row="2" Grid.Column="0" Content="Idle Thread:"/>
+						<Label Grid.Row="2" Grid.Column="1" Content="{Binding IdleThreads}"/>	
+						
+						<Label Grid.Row="4" Grid.Column="0" Content="Max Completion Ports:"/>
+						<Label Grid.Row="4" Grid.Column="1" Content="{Binding MaxCompletionPorts}"/>	
+						
+						<Label Grid.Row="5" Grid.Column="0" Content="Max Threads:"/>
+						<Label Grid.Row="5" Grid.Column="1" Content="{Binding MaxThreads}"/>	
+						
+						<Label Grid.Row="6" Grid.Column="0" Content="Min Completion Ports:"/>
+						<Label Grid.Row="6" Grid.Column="1" Content="{Binding MinCompletionPorts}"/>	
+						
+						<Label Grid.Row="7" Grid.Column="0" Content="Min Threads:"/>
+						<Label Grid.Row="7" Grid.Column="1" Content="{Binding MinThreads}"/>	
+						
+						<Label Grid.Row="8" Grid.Column="0" Content="Running Threads:"/>
+						<Label Grid.Row="8" Grid.Column="1" Content="{Binding RunningThreads}"/>	
+						
+						<Label Grid.Row="9" Grid.Column="0" Content="Total Threads:"/>
+						<Label Grid.Row="9" Grid.Column="1" Content="{Binding TotalThreads}"/>	
+					</Grid>
+				</Expander>
 			</StackPanel>
 		</Grid>
     </Grid>
