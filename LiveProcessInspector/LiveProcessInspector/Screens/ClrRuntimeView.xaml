@@ -47,7 +47,7 @@
 						<GridView.Columns>
 							<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
 							<GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
-							<GridViewColumn Header="Configuration File" DisplayMemberBinding="{Binding ConfigurationFile}"/>
+							<GridViewColumn Header="Configuration File" DisplayMemberBinding="{Binding ConfigurationFile, TargetNullValue=None}"/>
 						</GridView.Columns>
 					</GridView>
 				</ListView.View>
@@ -119,7 +119,20 @@
 						<Label Grid.Row="9" Grid.Column="1" Content="{Binding IsUnstarted}"/>	
 					</Grid>
 				</Expander>
-				<Expander Header="Object Heap"></Expander>
+				<Expander Header="Object Heap">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="3*"/>
+								<ColumnDefinition Width="5*"/>
+						</Grid.ColumnDefinitions>
+						<Label Grid.Row="0" Grid.Column="0" Content="Can Walk Heap:"/>
+						<Label Grid.Row="0" Grid.Column="1" Content="{Binding CanWalkHelp}"/>
+					</Grid>
+				</Expander>
 				<Expander Header="Thread Pool">
 					<Grid DataContext="{Binding ThreadPool}">
 						<Grid.RowDefinitions>

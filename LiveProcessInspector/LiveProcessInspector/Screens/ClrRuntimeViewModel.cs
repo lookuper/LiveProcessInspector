@@ -13,10 +13,28 @@ namespace LiveProcessInspector.Screens
 	public class ClrRuntimeViewModel : PropertyChangedBase
 	{
 		private readonly ClrRuntime _runtime;
+		private readonly ClrHeap _heap;
 
 		public ClrRuntimeViewModel(ClrRuntime runtime)
 		{
 			_runtime = runtime;
+			_heap = _runtime.GetHeap();
+
+			//foreach (var obj in _heap.EnumerateObjects())
+			//{
+			//	clr
+			//}
+
+			//var t = (from obj in _heap.EnumerateObjects()
+			//		 let type = _heap.GetObjectType(obj)
+			//		 let size = type.GetSize(obj)
+			//		 select new
+			//		 {
+			//			 Object = obj,
+			//			 Size = size,
+			//			 Name = type.Name
+			//		 }).ToList();
+			//var i = 5;
 		}
 
 		public bool IsServerGC { get { return _runtime.ServerGC; } }
@@ -25,6 +43,7 @@ namespace LiveProcessInspector.Screens
 		public IEnumerable<ClrAppDomain> AppDomains { get { return _runtime.AppDomains; } }
 		public IList<ClrThread> Threads { get { return _runtime.Threads; } }
 		public ClrThreadPool ThreadPool { get { return _runtime.GetThreadPool(); } }
+		public bool CanWalkHelp { get { return _heap.CanWalkHeap; } }
 
 		private ClrThread _selectedThread = null;
 		public ClrThread SelectedThread
