@@ -18,8 +18,7 @@ namespace LiveProcessInspector
         {
             container = new CompositionContainer(new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()));
 
-            CompositionBatch batch = new CompositionBatch();
-
+            CompositionBatch batch = new CompositionBatch();		
             batch.AddExportedValue<IWindowManager>(new WindowManager());
             batch.AddExportedValue<IEventAggregator>(new EventAggregator());
             batch.AddExportedValue(container);

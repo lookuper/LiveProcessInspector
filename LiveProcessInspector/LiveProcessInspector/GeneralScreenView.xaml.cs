@@ -22,7 +22,7 @@ namespace LiveProcessInspector
     {
         public GeneralScreenView()
         {
-            InitializeComponent();
+            InitializeComponent();			
         }
     }
 }

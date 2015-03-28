@@ -55,5 +55,27 @@ namespace LiveProcessInspector.Screens
 				NotifyOfPropertyChange(() => SelectedThread);
 			}
         }
+
+		public Object HeapObjects
+		{
+			get
+			{
+				if (!CanWalkHelp)
+					return null;
+
+				var heapObjects = (from obj in _heap.EnumerateObjects()
+						 let type = _heap.GetObjectType(obj)
+						 let size = type.GetSize(obj)
+						 select new
+						 {
+							 ObjectId = obj,
+							 Size = size,
+							 Name = type.Name
+						 }).ToList();
+
+				return heapObjects;
+			}
+
+		}
 	}
 }

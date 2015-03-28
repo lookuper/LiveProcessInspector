@@ -61,9 +61,7 @@
 							<GridViewColumn Header="Managed Thread Id" DisplayMemberBinding="{Binding ManagedThreadId}" />
 							<GridViewColumn Header="OS Thread Id" DisplayMemberBinding="{Binding OSThreadId}"/>
 							<GridViewColumn Header="Is Alive" DisplayMemberBinding="{Binding IsAlive}"/>
-							<GridViewColumn Header="Is STA" DisplayMemberBinding="{Binding IsSTA}" />
-							
-							
+							<GridViewColumn Header="Is STA" DisplayMemberBinding="{Binding IsSTA}" />													
 						</GridView.Columns>
 					</GridView>
 				</ListView.View>
@@ -131,6 +129,18 @@
 						</Grid.ColumnDefinitions>
 						<Label Grid.Row="0" Grid.Column="0" Content="Can Walk Heap:"/>
 						<Label Grid.Row="0" Grid.Column="1" Content="{Binding CanWalkHelp}"/>
+						
+						<ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="HeapObjects">
+							<ListView.View>
+								<GridView>
+									<GridView.Columns>
+										<GridViewColumn Header="Object Id" DisplayMemberBinding="{Binding ObjectId}" />
+										<GridViewColumn Header="Size" DisplayMemberBinding="{Binding Size}" />
+										<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+									</GridView.Columns>
+								</GridView>
+							</ListView.View>							
+						</ListView>
 					</Grid>
 				</Expander>
 				<Expander Header="Thread Pool">

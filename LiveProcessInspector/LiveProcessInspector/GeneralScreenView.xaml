@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:LiveProcessInspector"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
              mc:Ignorable="d" 
-             MinHeight="560" MinWidth="870">
+             MinHeight="560" MinWidth="870"
+			 >
     <DockPanel>
         
         <ToolBarPanel DockPanel.Dock="Top"  Background="Gainsboro">

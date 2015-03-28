@@ -27,6 +27,8 @@ namespace LiveProcessInspector
         public GeneralScreenViewModel(IWindowManager windowManager)
         {
             _windowManager = windowManager;
+			DisplayName = "Live Process Inspector v0.1 alpha";
+
 			OpenClrRuntime();
         }
 
