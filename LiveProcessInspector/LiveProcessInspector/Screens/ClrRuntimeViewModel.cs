@@ -73,6 +73,19 @@ namespace LiveProcessInspector.Screens
 							 Name = type.Name
 						 }).ToList();
 
+				// add heap statistic
+				//var stats = from o in _heap.EnumerateObjects()
+				//			let t = _heap.GetObjectType(o)
+				//			group o by t into g
+				//			let size = g.Sum(o => (uint)g.Key.GetSize(o))
+				//			orderby size
+				//			select new
+				//			{
+				//				Name = g.Key.Name,
+				//				Size = size,
+				//				Count = g.Count()
+				//			};
+
 				return heapObjects;
 			}
 
