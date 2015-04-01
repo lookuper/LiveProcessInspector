@@ -57,6 +57,18 @@ namespace LiveProcessInspector
 			if (_dataTarget == null)
 				throw new ArgumentNullException("_dataTarget");
 
+			try
+			{
+				var info = _dataTarget.ClrVersions.Single();
+			}
+			catch (NullReferenceException ex)
+			{
+				// set error header
+				var viewModel2 = new DataTargetViewModel(_dataTarget);
+				ActivateItem(viewModel2);
+				return;
+			}
+
 			var clrVersion = _dataTarget.ClrVersions.FirstOrDefault();
 			if (clrVersion == null)
 				throw new ArgumentNullException("clrVersion");
@@ -92,17 +104,21 @@ namespace LiveProcessInspector
 			//}
 
 			path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMini.dmp";
+			path = @"C:\Users\Maksym.Chernenko\Desktop\Crash_Dump_InvestigationApp.dmp";
 			//path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMiniNotebook.dmp";
 
 			if (_model.TryToOpenDump(path, out _dataTarget))
 			{
-				var location = _dataTarget.ClrVersions[0].TryGetDacLocation();
-				var locationFromNet = _dataTarget.ClrVersions[0].TryDownloadDac();
-
-				// refactor
 				try
 				{
-					_clrRuntime = _dataTarget.CreateRuntime(location ?? locationFromNet);
+					//var location = _dataTarget.ClrVersions[0].TryGetDacLocation();
+					//var locationFromNet = _dataTarget.ClrVersions[0].TryDownloadDac();
+
+					//_clrRuntime = _dataTarget.CreateRuntime(location ?? locationFromNet);
+				}
+				catch (NullReferenceException ex)
+				{
+					// dump without clr process
 				}
 				catch (ClrDiagnosticsException ex)
 				{ }

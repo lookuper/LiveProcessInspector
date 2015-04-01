@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
+using System.Windows;
 
 namespace LiveProcessInspector
 {
@@ -16,6 +17,7 @@ namespace LiveProcessInspector
 
         protected override void Configure()
         {
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             container = new CompositionContainer(new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()));
 
             CompositionBatch batch = new CompositionBatch();		
@@ -26,7 +28,12 @@ namespace LiveProcessInspector
             container.Compose(batch);
         }
 
-        protected override object GetInstance(Type serviceType, string key)
+		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			MessageBox.Show(e.ExceptionObject.ToString());
+		}
+
+		protected override object GetInstance(Type serviceType, string key)
         {
             string contract = string.IsNullOrEmpty(key) ? AttributedModelServices.GetContractName(serviceType) : key;
             var exports = container.GetExportedValues<object>(contract);
