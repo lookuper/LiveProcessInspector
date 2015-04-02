@@ -104,8 +104,8 @@ namespace LiveProcessInspector
 			//}
 
 			path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMini.dmp";
-			path = @"C:\Users\Maksym.Chernenko\Desktop\Crash_Dump_InvestigationApp.dmp";
-			//path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMiniNotebook.dmp";
+			//path = @"C:\Users\Maksym.Chernenko\Desktop\Crash_Dump_InvestigationApp.dmp";
+			path = @"C:\Procdump\LiveProcessInspector.vshost.exe_150401_230544.dmp";
 
 			if (_model.TryToOpenDump(path, out _dataTarget))
 			{

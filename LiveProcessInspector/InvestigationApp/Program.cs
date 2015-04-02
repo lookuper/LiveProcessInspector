@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -10,7 +12,20 @@ namespace InvestigationApp
 	class Program
 	{
 		static void Main(string[] args)
-		{			
+		{
+			string output = null;
+			var a = new FullDump();
+			var file = a.CreateFullDump(6980, out output);			//var dir = AppDomain.CurrentDomain.BaseDirectory;
+			//var name = "procdump.exe";
+			//var res2 = Path.GetFullPath(name);		
+
+			//var r = Process.Start(res2);
+			//r.WaitForExit();
+			//var res1 = Properties.Resources.procdump1;
+			//var test = AppDomain.CreateDomain("test");
+
+			//test.Load(res1);
+
 			int i = 1;
 			double d = 1.1;
 			string s = "string s";

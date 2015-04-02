@@ -77,7 +77,7 @@ namespace InvestigationApp
 					MiniDumpWriteDump(currentProcess.Handle,
 						(uint)currentProcess.Id,
 						fs.SafeFileHandle,
-						(uint)Option.WithFullMemory,
+						(uint)(Option.WithDataSegs | Option.WithFullMemory | Option.WithHandleData),
 						ref miniInfo,
 						IntPtr.Zero,
 						IntPtr.Zero);

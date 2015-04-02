@@ -63,30 +63,30 @@ namespace LiveProcessInspector.Screens
 				if (!CanWalkHelp)
 					return null;
 
-				var heapObjects = (from obj in _heap.EnumerateObjects()
-						 let type = _heap.GetObjectType(obj)
-						 let size = type.GetSize(obj)
-						 select new
-						 {
-							 ObjectId = obj,
-							 Size = size,
-							 Name = type.Name
-						 }).ToList();
+				//var heapObjects = (from obj in _heap.EnumerateObjects()
+				//		 let type = _heap.GetObjectType(obj)
+				//		 let size = type.GetSize(obj)
+				//		 select new
+				//		 {
+				//			 ObjectId = obj,
+				//			 Size = size,
+				//			 Name = type.Name
+				//		 }).ToList();
 
 				// add heap statistic
-				//var stats = from o in _heap.EnumerateObjects()
-				//			let t = _heap.GetObjectType(o)
-				//			group o by t into g
-				//			let size = g.Sum(o => (uint)g.Key.GetSize(o))
-				//			orderby size
-				//			select new
-				//			{
-				//				Name = g.Key.Name,
-				//				Size = size,
-				//				Count = g.Count()
-				//			};
+				var stats = (from o in _heap.EnumerateObjects()
+							let t = _heap.GetObjectType(o)
+							group o by t into g
+							let size = g.Sum(o => (uint)g.Key.GetSize(o))
+							orderby size
+							select new
+							{
+								Name = g.Key.Name,
+								Size = size,
+								Count = g.Count()
+							}).ToList();
 
-				return heapObjects;
+				return stats;
 			}
 
 		}
