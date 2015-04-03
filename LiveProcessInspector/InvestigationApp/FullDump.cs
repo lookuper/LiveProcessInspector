@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace InvestigationApp
 {
 	public class FullDump
-	{
-		private string _procdump = "procdump.exe";
+	{		
+		private readonly string _procdump = "procdump.exe"; // https://technet.microsoft.com/en-us/sysinternals/dd996900.aspx
 		public string CurrentDirectory { get { return AppDomain.CurrentDomain.BaseDirectory; } }
 
-		private string GetFullPathToProcDump()
+		private string GetFullPathToProcdump()
 		{
 			if (!Directory.Exists(CurrentDirectory))
 				throw new ArgumentException(nameof(CurrentDirectory));
@@ -23,7 +23,7 @@ namespace InvestigationApp
 
 		public String CreateFullDump(int processPid, out string output)
 		{
-			var path = GetFullPathToProcDump();
+			var path = GetFullPathToProcdump();
 			if (String.IsNullOrEmpty(path))
 				throw new ArgumentException("Cannot find procdump.exe");
 

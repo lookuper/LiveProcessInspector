@@ -1,14 +1,17 @@
 ﻿using Caliburn.Micro;
 using LiveProcessInspector.Screens;
+using LiveProcessInspector.Utils;
 using Microsoft.Diagnostics.Runtime;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,7 +32,13 @@ namespace LiveProcessInspector
             _windowManager = windowManager;
 			DisplayName = "Live Process Inspector v0.1 alpha";
 
-			OpenClrRuntime();
+			//OpenClrRuntime();
+		}
+
+		public void DoAnything()
+		{
+			var res = SelectedProcessUtil.GetProcessAfterLeftMouseUp();
+			var i = 5;
         }
 
 		public bool IsDataTargetAvaliable

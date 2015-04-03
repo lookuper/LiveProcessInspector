@@ -24,5 +24,5 @@ namespace LiveProcessInspector
         {
             InitializeComponent();			
         }
-    }
+	}
 }

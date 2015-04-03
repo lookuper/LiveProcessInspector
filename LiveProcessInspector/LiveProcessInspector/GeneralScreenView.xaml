@@ -25,6 +25,9 @@
 				<Button IsEnabled="{Binding IsRuntimeAvalible!}"  cal:Message.Attach="[Event Click] = [Action OpenClrRuntime()]">
                     <Image Source="Icons/FileBrowser.png" ToolTip="Tip"></Image>
                 </Button>
+				<Button Content="XXX" 
+						cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action DoAnything()]">					
+				</Button>
             </ToolBar>
         </ToolBarPanel>
         
