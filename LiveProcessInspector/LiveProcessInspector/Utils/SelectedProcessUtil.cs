@@ -31,7 +31,7 @@ namespace LiveProcessInspector.Utils
 			return w32Mouse;
 		}
 
-		public static Process GetProcessAfterLeftMouseUp()
+		public static int GetProcessAfterLeftMouseUp()
 		{
 			Win32Point clickPosition = GetMousePosition();
 			IntPtr hWnd = WindowFromPoint(clickPosition);
@@ -39,9 +39,10 @@ namespace LiveProcessInspector.Utils
 			uint processID = uint.MinValue;
 			var threadId = GetWindowThreadProcessId(hWnd, out processID);
 
-			var proc = Process.GetProcessById((int)processID);
-
-			return proc;
+			checked
+			{
+				return (int)processID;
+			}
 		}
 	}
 }

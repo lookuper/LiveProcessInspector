@@ -35,10 +35,12 @@ namespace LiveProcessInspector
 			//OpenClrRuntime();
 		}
 
-		public void DoAnything()
+		public void SelectProcess()
 		{
 			var res = SelectedProcessUtil.GetProcessAfterLeftMouseUp();
-			var i = 5;
+			var viewModel = new TargetLookupViewModel(res);
+
+			ActivateItem(viewModel);
         }
 
 		public bool IsDataTargetAvaliable

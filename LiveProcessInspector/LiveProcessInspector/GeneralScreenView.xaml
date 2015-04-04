@@ -26,7 +26,7 @@
                     <Image Source="Icons/FileBrowser.png" ToolTip="Tip"></Image>
                 </Button>
 				<Button Content="XXX" 
-						cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action DoAnything()]">					
+						cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action SelectProcess()]">					
 				</Button>
             </ToolBar>
         </ToolBarPanel>
