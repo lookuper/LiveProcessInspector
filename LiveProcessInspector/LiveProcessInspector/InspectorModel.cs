@@ -14,6 +14,7 @@ namespace LiveProcessInspector
 {
     public class InspectorModel
     {
+		private TimeSpan _attachDelay = TimeSpan.FromSeconds(5);
         public List<String> GetAvaliableProcesses()
         {
             var output = new ConcurrentStack<Process>();
@@ -41,7 +42,37 @@ namespace LiveProcessInspector
                 .ToList();
         }
 
-        public bool TryToAttach(String selectedProcess, out DataTarget outTarget)
+		public bool CanAttach(int processPid)
+		{
+			var proc = Process.GetProcessById(processPid);
+
+			try
+			{
+				DataTarget target;
+				TryToAttach(processPid, out target);
+				return true;
+
+			}
+			catch (ClrDiagnosticsException ex)
+			{
+				// log
+				return false;
+			}
+		}
+
+		public bool TryToAttach(int processPid, out DataTarget outTarget)
+		{
+			outTarget = null;
+			var neededProc = Process.GetProcessById(processPid);
+
+			if (neededProc == null)
+				return false;
+
+			outTarget = DataTarget.AttachToProcess(neededProc.Id, (uint)_attachDelay.Milliseconds);
+			return true;
+		}
+
+		public bool TryToAttach(String selectedProcess, out DataTarget outTarget)
         {
             outTarget = null;
             var neededProc = Process.GetProcesses()
@@ -65,13 +96,6 @@ namespace LiveProcessInspector
             outTarget = DataTarget.LoadCrashDump(path);
             return true;
         }
-
-
-
-
-
-
-
 
         private IEnumerable<String> Desktop40LanguageRuntime()
         {

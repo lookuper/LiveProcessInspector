@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
              xmlns:local="clr-namespace:LiveProcessInspector.Screens"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="300">
@@ -42,7 +43,16 @@
 			
 		</Grid>
 		
-		<Button Grid.Row="1" Grid.Column="1" Content="Try to Attach"></Button>		
-		<Button Grid.Row="1" Grid.Column="3" Content="Dump"></Button>
+		<Button Grid.Row="1" Grid.Column="1" Content="Try to Attach"
+				IsEnabled="{Binding CanAttach}"
+				cal:Message.Attach="[Event Click] = [Action AttachToProcess()]"></Button>	
+		
+		<Button Grid.Row="1" Grid.Column="3" Content="Dump"
+				
+				cal:Message.Attach="[Event Click] = [Action DumpProcess()]"></Button>
+		
+		<Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+			<Label x:Name="Message"/>
+		</Grid>
     </Grid>
 </UserControl>
