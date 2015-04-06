@@ -23,8 +23,8 @@ namespace LiveProcessInspector
     {
         private readonly InspectorModel _model = new InspectorModel();
         private readonly IWindowManager _windowManager;
-		private DataTarget _dataTarget;
-		private ClrRuntime _clrRuntime;
+		public DataTarget CurrentDataTarget;
+		public ClrRuntime CurrentClrRuntime;
 
         [ImportingConstructor]
         public GeneralScreenViewModel(IWindowManager windowManager)
@@ -38,62 +38,61 @@ namespace LiveProcessInspector
 		public void SelectProcess()
 		{
 			var res = SelectedProcessUtil.GetProcessAfterLeftMouseUp();
-			var viewModel = new TargetLookupViewModel(res);
-
+			var viewModel = new TargetLookupViewModel(res, this);
 			ActivateItem(viewModel);
         }
 
 		public bool IsDataTargetAvaliable
 		{
-            get { return _dataTarget != null; }
+            get { return CurrentDataTarget != null; }
 		}
 
 		public bool IsRuntimeAvalible
 		{
-			get { return _clrRuntime != null; }
+			get { return CurrentClrRuntime != null; }
 		}
 
 		public void OpenDataTarget()
 		{
-			if (_dataTarget == null)
+			if (CurrentDataTarget == null)
 				OpenDump();
 
-			var viewModel = new DataTargetViewModel(_dataTarget);
+			var viewModel = new DataTargetViewModel(CurrentDataTarget);
 			ActivateItem(viewModel);
 		}
 
 		public void OpenClrRuntime()
 		{
-			OpenDump(); // to speed up development
-			if (_dataTarget == null)
+			//OpenDump(); // to speed up development
+			if (CurrentDataTarget == null)
 				throw new ArgumentNullException("_dataTarget");
 
 			try
 			{
-				var info = _dataTarget.ClrVersions.Single();
+				var info = CurrentDataTarget.ClrVersions.Single();
 			}
 			catch (NullReferenceException ex)
 			{
 				// set error header
-				var viewModel2 = new DataTargetViewModel(_dataTarget);
+				var viewModel2 = new DataTargetViewModel(CurrentDataTarget);
 				ActivateItem(viewModel2);
 				return;
 			}
 
-			var clrVersion = _dataTarget.ClrVersions.FirstOrDefault();
+			var clrVersion = CurrentDataTarget.ClrVersions.FirstOrDefault();
 			if (clrVersion == null)
 				throw new ArgumentNullException("clrVersion");
 
-			if (_clrRuntime == null)
-				_clrRuntime = _dataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
+			if (CurrentClrRuntime == null)
+				CurrentClrRuntime = CurrentDataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
 
-			var viewModel = new ClrRuntimeViewModel(_clrRuntime);
+			var viewModel = new ClrRuntimeViewModel(CurrentClrRuntime);
 			ActivateItem(viewModel);
 		}
 
 		protected override void OnDeactivate(bool close)
 		{
-			using (_dataTarget) { }
+			using (CurrentDataTarget) { }
 			base.OnDeactivate(close);
 		}
 
@@ -118,7 +117,7 @@ namespace LiveProcessInspector
 			//path = @"C:\Users\Maksym.Chernenko\Desktop\Crash_Dump_InvestigationApp.dmp";
 			path = @"C:\Procdump\LiveProcessInspector.vshost.exe_150401_230544.dmp";
 
-			if (_model.TryToOpenDump(path, out _dataTarget))
+			if (_model.TryToOpenDump(path, out CurrentDataTarget))
 			{
 				try
 				{
@@ -149,9 +148,9 @@ namespace LiveProcessInspector
 
             if (res.HasValue && res.Value)
             {
-                if (_model.TryToAttach(avaliableProcessModel.SelectedProcess, out _dataTarget))
+                if (_model.TryToAttach(avaliableProcessModel.SelectedProcess, out CurrentDataTarget))
                 {
-                    var location = _dataTarget.ClrVersions[0].TryGetDacLocation();
+                    var location = CurrentDataTarget.ClrVersions[0].TryGetDacLocation();
                     //var runtime = _dataTarget.CreateRuntime(location);
                 }
 

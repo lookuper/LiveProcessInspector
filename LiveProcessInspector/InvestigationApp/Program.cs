@@ -15,7 +15,7 @@ namespace InvestigationApp
 		{
 			string output = null;
 			var a = new FullDump();
-			var file = a.CreateFullDump(6980, out output);			//var dir = AppDomain.CurrentDomain.BaseDirectory;
+			//var file = a.CreateFullDump(6980, out output);			//var dir = AppDomain.CurrentDomain.BaseDirectory;
 			//var name = "procdump.exe";
 			//var res2 = Path.GetFullPath(name);		
 

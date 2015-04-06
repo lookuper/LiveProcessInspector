@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using InvestigationApp;
+using Microsoft.Diagnostics.Runtime;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -18,6 +20,7 @@ namespace LiveProcessInspector.Screens
 		private readonly InspectorModel _inspector;
 		private bool _canAttach = true;
 		private string _message;
+		private GeneralScreenViewModel generalScreenViewModel;
 
 		public int ProcessPid { get { return _processPid; } }
 		public string ProcessName { get { return _processName; } }
@@ -43,10 +46,17 @@ namespace LiveProcessInspector.Screens
 			_inspector = new InspectorModel();
 		}
 
+		public TargetLookupViewModel(int processPid, GeneralScreenViewModel generalScreenViewModel) : this(processPid)
+		{
+			this.generalScreenViewModel = generalScreenViewModel;
+			this.generalScreenViewModel.CurrentDataTarget = null; 
+			this.generalScreenViewModel.CurrentClrRuntime = null;
+		}
+
 		public void AttachToProcess()
 		{
 			// use inspector model here
-			if (!_inspector.CanAttach(_processPid))
+			if (!_inspector.CanAttach(ProcessPid))
 			{
 				CanAttach = false;
 				Message = "Cannot attach to service, try to create a dump";
@@ -55,6 +65,20 @@ namespace LiveProcessInspector.Screens
 
 		public void DumpProcess()
 		{
+			var dumpHelper = new FullDump();
+			string output;
+
+			var pathToDump = dumpHelper.CreateFullDump(ProcessPid, ProcessName, out output);
+			DataTarget data;
+
+			if (!_inspector.TryToOpenDump(pathToDump, out data))
+			{
+				Message = "Cannot create service dump: " + output;
+			}
+
+            var viewModel = new DataTargetViewModel(data);
+			generalScreenViewModel.CurrentDataTarget = data;
+			generalScreenViewModel.ActivateItem(viewModel);
 		}
 	}
 }

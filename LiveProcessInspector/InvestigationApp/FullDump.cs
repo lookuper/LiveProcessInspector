@@ -21,13 +21,13 @@ namespace InvestigationApp
 			return Path.GetFullPath(_procdump);
 		}
 
-		public String CreateFullDump(int processPid, out string output)
+		public String CreateFullDump(int processPid, string processName, out string output)
 		{
 			var path = GetFullPathToProcdump();
 			if (String.IsNullOrEmpty(path))
 				throw new ArgumentException("Cannot find procdump.exe");
-
-			var fileName = String.Format("{0}_{1}.dmp", AppDomain.CurrentDomain.FriendlyName, DateTime.Now.ToString("hms"));
+			
+			var fileName = String.Format("{0}_{1}.dmp", processName, DateTime.Now.ToString("hms"));
             var process = new Process();
 			process.StartInfo.FileName = _procdump;
 			process.StartInfo.Arguments = String.Format("-ma {0} {1}", processPid, fileName);
