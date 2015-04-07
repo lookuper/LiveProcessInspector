@@ -162,40 +162,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\ClearOutputWindow.png" />
-    <Resource Include="Icons\FileBrowser.png" />
-    <Resource Include="Icons\Folder.Closed.png" />
-    <Resource Include="Icons\Folder.Open.png" />
-    <Resource Include="Icons\Icons.16x16.Assembly.png" />
-    <Resource Include="Icons\Icons.16x16.CommentRegion.png" />
-    <Resource Include="Icons\Icons.16x16.CopyIcon.png" />
-    <Resource Include="Icons\Icons.16x16.CSFile.png" />
-    <Resource Include="Icons\Icons.16x16.CutIcon.png" />
-    <Resource Include="Icons\Icons.16x16.DeleteIcon.png" />
-    <Resource Include="Icons\Icons.16x16.FindIcon.png" />
-    <Resource Include="Icons\Icons.16x16.Indent.png" />
-    <Resource Include="Icons\Icons.16x16.MiscFiles.png" />
-    <Resource Include="Icons\Icons.16x16.PasteIcon.png" />
-    <Resource Include="Icons\Icons.16x16.Property.png" />
-    <Resource Include="Icons\Icons.16x16.RedoIcon.png" />
-    <Resource Include="Icons\Icons.16x16.Reference.png" />
-    <Resource Include="Icons\Icons.16x16.ReferenceModule.png" />
-    <Resource Include="Icons\Icons.16x16.RunAllIcon.png" />
-    <Resource Include="Icons\Icons.16x16.RunProgramIcon.png" />
-    <Resource Include="Icons\Icons.16x16.SaveAllIcon.png" />
-    <Resource Include="Icons\Icons.16x16.SaveIcon.png" />
-    <Resource Include="Icons\Icons.16x16.TextFileIcon.png" />
-    <Resource Include="Icons\Icons.16x16.UndoIcon.png" />
-    <Resource Include="Icons\Icons.16x16.XMLFileIcon.png" />
-    <Resource Include="Icons\Open.png" />
-    <Resource Include="Icons\Output.png" />
-    <Resource Include="Icons\page_go.png" />
-    <Resource Include="Icons\page_white_go.png" />
-    <Resource Include="Icons\ReferenceFolder.Closed.png" />
-    <Resource Include="Icons\ReferenceFolder.Open.png" />
-    <Resource Include="Icons\Toolbar.Refresh.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Icons\open-file-icon.png" />
+    <Resource Include="Icons\Target-icon.png" />
+    <Resource Include="Icons\Show-Property-icon.png" />
+    <Resource Include="Icons\Info-icon.png" />
     <Content Include="Microsoft.Diagnostics.Runtime.dll" />
     <Content Include="Microsoft.Diagnostics.Runtime.pdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

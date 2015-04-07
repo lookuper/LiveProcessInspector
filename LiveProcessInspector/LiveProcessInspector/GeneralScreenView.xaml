@@ -11,22 +11,24 @@
     <DockPanel>
         
         <ToolBarPanel DockPanel.Dock="Top"  Background="Gainsboro">
-            <ToolBar ToolBarTray.IsLocked="True">
-                <Button cal:Message.Attach="[Event Click] = [Action AttachToProcess()]">
-                    <Image Source="Icons/Folder.Open.png" ToolTip="Tip"></Image>
-                </Button>
-                <Button cal:Message.Attach="[Event Click] = [Action OpenDump()]">
-                    <Image Source="Icons/Folder.Open.png" ToolTip="Tip"></Image>
+			<ToolBar ToolBarTray.IsLocked="True">
+				<Button cal:Message.Attach="[Event Click] = [Action OpenDump()]">
+                    <Image Source="Icons/open-file-icon.png" ToolTip="Open Dump"></Image>
                 </Button>
 				<Separator/>
 				<Button IsEnabled="{Binding IsDataTargetAvaliable!}"  cal:Message.Attach="[Event Click] = [Action OpenDataTarget()]">
-                    <Image Source="Icons/FileBrowser.png" ToolTip="Tip"></Image>
+                    <Image Source="Icons/show-property-icon.png" ToolTip="Data Target"></Image>
                 </Button>
 				<Button IsEnabled="{Binding IsRuntimeAvalible!}"  cal:Message.Attach="[Event Click] = [Action OpenClrRuntime()]">
-                    <Image Source="Icons/FileBrowser.png" ToolTip="Tip"></Image>
+                    <Image Source="Icons/show-property-icon.png" ToolTip="CLR Runtime"></Image>
                 </Button>
-				<Button Content="XXX" 
-						cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action SelectProcess()]">					
+				<Separator/>
+				<Button cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action SelectProcess()]">
+					<Image Source="Icons/Target-icon.png" ToolTip="Select Process"></Image>
+				</Button>
+				<Separator/>
+				<Button>
+					<Image Source="Icons/Info-icon.png" ToolTip="About"></Image>
 				</Button>
             </ToolBar>
         </ToolBarPanel>
