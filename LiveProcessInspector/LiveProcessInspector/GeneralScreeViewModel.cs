@@ -23,6 +23,11 @@ namespace LiveProcessInspector
     {
         private readonly InspectorModel _model = new InspectorModel();
         private readonly IWindowManager _windowManager;
+		private double _dumpsSize = 555.43;
+		private bool _isClearButtonEnabled = true;
+		public string _dumpList = String.Empty;
+        private InspectorModel _inspector = new InspectorModel();
+
 		public DataTarget CurrentDataTarget;
 		public ClrRuntime CurrentClrRuntime;
 
@@ -33,14 +38,45 @@ namespace LiveProcessInspector
 			DisplayName = "Live Process Inspector v0.1 alpha";
 
 			//OpenClrRuntime();
-		}
+			RefreshStatusBar();
+        }
 
 		public void SelectProcess()
 		{
 			var res = SelectedProcessUtil.GetProcessAfterLeftMouseUp();
 			var viewModel = new TargetLookupViewModel(res, this);
 			ActivateItem(viewModel);
-        }
+		}
+
+		public void RefreshStatusBar()
+		{
+			DumpsSize = _inspector.GetAllDumpSize();
+			DumpList = String.Join(Environment.NewLine, _inspector.GetDumpNames());
+		}
+
+		public bool IsClearButtonEnabled
+		{
+            get { return _isClearButtonEnabled; }
+			set { _isClearButtonEnabled = value; NotifyOfPropertyChange(() => IsClearButtonEnabled); }
+		}
+
+		public string DumpList
+		{
+            get { return _dumpList; }
+			set { _dumpList = value; NotifyOfPropertyChange(() => DumpList); }
+		}
+
+		public void DeleteAllDumps()
+		{
+			_inspector.DeleteAllDumps();
+			RefreshStatusBar();
+		}
+
+		public double DumpsSize
+		{
+			get { return _inspector.GetAllDumpSize() ; }
+			set { _dumpsSize = value; NotifyOfPropertyChange(() => DumpsSize); }
+		}
 
 		public bool IsDataTargetAvaliable
 		{

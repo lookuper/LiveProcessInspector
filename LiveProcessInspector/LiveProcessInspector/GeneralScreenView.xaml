@@ -33,8 +33,27 @@
             </ToolBar>
         </ToolBarPanel>
         
-        <StatusBar DockPanel.Dock="Bottom" Height="25" >
-            
+        <StatusBar DockPanel.Dock="Bottom" 
+				   VerticalAlignment="Bottom">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<StackPanel Orientation="Horizontal" Grid.Column="0">
+					<Separator Width="1"/>
+					<Label Content="Dump's in folder Size:"/>
+					<Label x:Name="DumpsSize"/>
+					<Label Content="MB"/>
+					<Button cal:Message.Attach="[Event Click] = [Action DeleteAllDumps()]" 
+							Padding="5"
+							ToolTip="{Binding DumpList}"
+							Content="Clear" 
+							IsEnabled="{Binding IsClearButtonEnabled}">
+						
+					</Button>
+				</StackPanel>
+			</Grid>
         </StatusBar>
 
 		<ContentControl x:Name="ActiveItem"></ContentControl>            

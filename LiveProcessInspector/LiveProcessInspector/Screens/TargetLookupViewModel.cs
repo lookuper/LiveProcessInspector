@@ -76,7 +76,9 @@ namespace LiveProcessInspector.Screens
 				Message = "Cannot create service dump: " + output;
 			}
 
-            var viewModel = new DataTargetViewModel(data);
+			generalScreenViewModel.RefreshStatusBar();
+
+			var viewModel = new DataTargetViewModel(data);
 			generalScreenViewModel.CurrentDataTarget = data;
 			generalScreenViewModel.ActivateItem(viewModel);
 		}

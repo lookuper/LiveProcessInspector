@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Reflection;
 
 namespace LiveProcessInspector
 {
@@ -58,6 +59,42 @@ namespace LiveProcessInspector
 				// log
 				return false;
 			}
+		}
+
+		public int GetAllDumpSize()
+		{
+			string[] avaliableDumpsNames = GetDumpNames();
+
+			if (avaliableDumpsNames.Count() == 0)
+				return 0;
+
+			var bytesSum = avaliableDumpsNames.Select(x => new FileInfo(x).Length).Sum();
+
+			return (int)((bytesSum / 1024f) / 1024f);
+		}
+
+		public void DeleteAllDumps()
+		{
+            foreach (var item in GetDumpNames())
+			{
+				try
+				{
+					File.Delete(item);
+				}
+				catch (UnauthorizedAccessException ex)
+				{
+					// log
+					//new FileInfo(item).Delete();
+				}
+            }
+		}
+
+		public string[] GetDumpNames()
+		{
+			var appDir = AppDomain.CurrentDomain.BaseDirectory;
+			var avaliableDumpsNames = Directory.GetFiles(appDir, "*.dmp", SearchOption.TopDirectoryOnly);
+
+			return avaliableDumpsNames;
 		}
 
 		public bool TryToAttach(int processPid, out DataTarget outTarget)
