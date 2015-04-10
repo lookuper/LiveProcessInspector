@@ -88,6 +88,11 @@ namespace LiveProcessInspector
 			get { return CurrentClrRuntime != null; }
 		}
 
+		public override void CanClose(Action<bool> callback)
+		{
+			base.CanClose(callback);
+		}
+
 		public void OpenDataTarget()
 		{
 			if (CurrentDataTarget == null)
@@ -119,8 +124,16 @@ namespace LiveProcessInspector
 			if (clrVersion == null)
 				throw new ArgumentNullException("clrVersion");
 
-			if (CurrentClrRuntime == null)
-				CurrentClrRuntime = CurrentDataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
+			try
+			{
+				if (CurrentClrRuntime == null)
+					CurrentClrRuntime = CurrentDataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
+			}
+			catch (ClrDiagnosticsException ex)
+			{
+				MessageBox.Show("Cannot open CLR runtime, due the: " + ex.Message);
+				return;
+			}
 
 			var viewModel = new ClrRuntimeViewModel(CurrentClrRuntime);
 			ActivateItem(viewModel);
@@ -139,28 +152,24 @@ namespace LiveProcessInspector
 			dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
 			string path;
-			//var res = dlg.ShowDialog();
+			var res = dlg.ShowDialog();
 
-			//if (res.HasValue && res.Value)
-			//    path = dlg.FileName;
-			//else
-			//{
-			//    //MessageBox.Show("Cannot find such file");
-			//    return;
-			//}
+			if (res.HasValue && res.Value)
+				path = dlg.FileName;
+			else
+			{
+				MessageBox.Show("Cannot find such file");
+				return;
+			}
 
-			path = @"C:\Users\Maksym.Chernenko\Desktop\LiveProcessInspectorMini.dmp";
-			//path = @"C:\Users\Maksym.Chernenko\Desktop\Crash_Dump_InvestigationApp.dmp";
-			path = @"C:\Procdump\LiveProcessInspector.vshost.exe_150401_230544.dmp";
+			//path = @"C:\Procdump\LiveProcessInspector.vshost.exe_150401_230544.dmp";
 
 			if (_model.TryToOpenDump(path, out CurrentDataTarget))
 			{
 				try
 				{
-					//var location = _dataTarget.ClrVersions[0].TryGetDacLocation();
-					//var locationFromNet = _dataTarget.ClrVersions[0].TryDownloadDac();
-
-					//_clrRuntime = _dataTarget.CreateRuntime(location ?? locationFromNet);
+					var viewModel2 = new DataTargetViewModel(CurrentDataTarget);
+					ActivateItem(viewModel2);
 				}
 				catch (NullReferenceException ex)
 				{

@@ -100,6 +100,7 @@
       <DependentUpon>TargetLookupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Screens\TargetLookupViewModel.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Utils\SelectedProcessUtil.cs" />
     <Compile Include="Utils\Win32Point.cs" />
   </ItemGroup>

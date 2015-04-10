@@ -84,7 +84,8 @@ namespace LiveProcessInspector
 				catch (UnauthorizedAccessException ex)
 				{
 					// log
-					//new FileInfo(item).Delete();
+					//File.SetAttributes(item, FileAttributes.Normal);
+					//File.Delete(item);
 				}
             }
 		}
