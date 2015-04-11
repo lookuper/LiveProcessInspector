@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Resources;
 
 namespace LiveProcessInspector
 {
@@ -27,6 +30,8 @@ namespace LiveProcessInspector
 		private bool _isClearButtonEnabled = true;
 		public string _dumpList = String.Empty;
         private InspectorModel _inspector = new InspectorModel();
+		private Cursor _originalCursor;
+		private Cursor _targetCursor;
 
 		public DataTarget CurrentDataTarget;
 		public ClrRuntime CurrentClrRuntime;
@@ -37,15 +42,24 @@ namespace LiveProcessInspector
             _windowManager = windowManager;
 			DisplayName = "Live Process Inspector v0.1 alpha";
 
+			_originalCursor = Mouse.OverrideCursor;
+			_targetCursor = new Cursor(Application.GetResourceStream(new Uri("Icons/target.ico", UriKind.Relative)).Stream);
 			//OpenClrRuntime();
 			RefreshStatusBar();
         }
 
-		public void SelectProcess()
+		public void MouseDown()
 		{
+			Mouse.OverrideCursor = _targetCursor;
+		}
+
+		public void SelectProcess()
+		{			
 			var res = SelectedProcessUtil.GetProcessAfterLeftMouseUp();
 			var viewModel = new TargetLookupViewModel(res, this);
 			ActivateItem(viewModel);
+
+			Mouse.OverrideCursor = _originalCursor;
 		}
 
 		public void RefreshStatusBar()

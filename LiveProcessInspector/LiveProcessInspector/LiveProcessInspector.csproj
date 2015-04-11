@@ -169,6 +169,8 @@
     <Resource Include="Icons\Info-icon.png" />
     <Resource Include="Icons\get-icon.png" />
     <Resource Include="Icons\bug-icon.png" />
+    <Resource Include="Icons\target.ico" />
+    <Resource Include="Icons\target2.ico" />
     <Content Include="Microsoft.Diagnostics.Runtime.dll" />
     <Content Include="Microsoft.Diagnostics.Runtime.pdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -23,6 +23,9 @@ namespace LiveProcessInspector.Utils
 		[DllImport("user32.dll", SetLastError = true)]
 		static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
+		[DllImport("user32.dll", SetLastError = true)]
+		static extern bool BringWindowToTop(IntPtr hWnd);
+
 		private static Win32Point GetMousePosition()
 		{
 			Win32Point w32Mouse = new Win32Point();
@@ -36,6 +39,7 @@ namespace LiveProcessInspector.Utils
 			Win32Point clickPosition = GetMousePosition();
 			IntPtr hWnd = WindowFromPoint(clickPosition);
 
+			//var res = BringWindowToTop(hWnd);
 			uint processID = uint.MinValue;
 			var threadId = GetWindowThreadProcessId(hWnd, out processID);
 

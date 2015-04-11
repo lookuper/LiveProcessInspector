@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LiveProcessInspector"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
              mc:Ignorable="d" 
-             MinHeight="560" MinWidth="870"		 
+             MinHeight="560" MinWidth="870"				 
 			 >
     <DockPanel>
         
@@ -23,7 +23,8 @@
                     <Image Source="Icons/show-property-icon.png" ToolTip="CLR Runtime"></Image>
                 </Button>
 				<Separator/>
-				<Button cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action SelectProcess()]">
+				<Button PreviewMouseLeftButtonUp ="Button_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown"
+					cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action SelectProcess()]; [Event PreviewMouseLeftButtonDown] = [Action MouseDown()]">
 					<Image Source="Icons/Target-icon.png" ToolTip="Select Process"></Image>
 				</Button>
 				<Separator/>

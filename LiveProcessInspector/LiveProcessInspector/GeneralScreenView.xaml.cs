@@ -20,9 +20,22 @@ namespace LiveProcessInspector
     /// </summary>
     public partial class GeneralScreenView : UserControl
     {
-        public GeneralScreenView()
+		private Window window;
+		public GeneralScreenView()
         {
-            InitializeComponent();			
-        }
+            InitializeComponent();
+		}
+
+		private void Button_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			window = Window.GetWindow(this);
+			window.WindowState = WindowState.Normal;
+		}
+
+		private void Button_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			window = Window.GetWindow(this);
+			window.WindowState = WindowState.Minimized;
+		}
 	}
 }
