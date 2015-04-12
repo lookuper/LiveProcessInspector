@@ -56,12 +56,14 @@ namespace LiveProcessInspector.Screens
 		public void AttachToProcess()
 		{
 			// use inspector model here
-			if (!_inspector.CanAttach(ProcessPid))
+			if (!_inspector.TryToAttach(ProcessPid, out generalScreenViewModel.CurrentDataTarget))
 			{
 				CanAttach = false;
 				Message = "Cannot attach to service, try to create a dump";
 			}
-		}
+			else
+				RefreshBarAndGoToDataTarget(generalScreenViewModel.CurrentDataTarget);
+        }
 
 		public void DumpProcess()
 		{
@@ -76,6 +78,11 @@ namespace LiveProcessInspector.Screens
 				Message = "Cannot create service dump: " + output;
 			}
 
+			RefreshBarAndGoToDataTarget(data);
+		}
+
+		private void RefreshBarAndGoToDataTarget(DataTarget data)
+		{
 			generalScreenViewModel.RefreshStatusBar();
 
 			var viewModel = new DataTargetViewModel(data);

@@ -29,7 +29,11 @@ namespace LiveProcessInspector
 		private void Button_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			window = Window.GetWindow(this);
-			window.WindowState = WindowState.Normal;
+
+			Task.Delay(TimeSpan.FromMilliseconds(100)).ContinueWith(res =>
+			{
+				window.WindowState = WindowState.Normal;
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		private void Button_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

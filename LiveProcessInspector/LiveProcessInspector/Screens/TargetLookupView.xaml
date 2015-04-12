@@ -27,9 +27,9 @@
 				<ColumnDefinition Width="3*"/>
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition/>
-				<RowDefinition/>
-				<RowDefinition/>
+				<RowDefinition Height="25"/>
+				<RowDefinition Height="25"/>
+				<RowDefinition Height="25"/>
 			</Grid.RowDefinitions>
 			
 			<Label Grid.Row="0" Grid.Column="0" Content="Name:"/>

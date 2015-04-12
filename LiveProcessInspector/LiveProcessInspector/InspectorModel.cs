@@ -15,7 +15,7 @@ namespace LiveProcessInspector
 {
     public class InspectorModel
     {
-		private TimeSpan _attachDelay = TimeSpan.FromSeconds(5);
+		private TimeSpan _attachDelay = TimeSpan.FromSeconds(7);
         public List<String> GetAvaliableProcesses()
         {
             var output = new ConcurrentStack<Process>();
@@ -106,7 +106,7 @@ namespace LiveProcessInspector
 			if (neededProc == null)
 				return false;
 
-			outTarget = DataTarget.AttachToProcess(neededProc.Id, (uint)_attachDelay.Milliseconds);
+			outTarget = DataTarget.AttachToProcess(neededProc.Id, (uint)_attachDelay.TotalMilliseconds);
 			return true;
 		}
 
