@@ -66,6 +66,7 @@ namespace LiveProcessInspector
 		{
 			DumpsSize = _inspector.GetAllDumpSize();
 			DumpList = String.Join(Environment.NewLine, _inspector.GetDumpNames());
+			IsClearButtonEnabled = !String.IsNullOrEmpty(DumpList);
 		}
 
 		public bool IsClearButtonEnabled
@@ -112,15 +113,24 @@ namespace LiveProcessInspector
 			if (CurrentDataTarget == null)
 				OpenDump();
 
-			var viewModel = new DataTargetViewModel(CurrentDataTarget);
-			ActivateItem(viewModel);
+			if (CurrentDataTarget != null)
+			{
+				var viewModel = new DataTargetViewModel(CurrentDataTarget);
+				ActivateItem(viewModel);
+			}
 		}
 
 		public void OpenClrRuntime()
 		{
 			//OpenDump(); // to speed up development
 			if (CurrentDataTarget == null)
-				throw new ArgumentNullException("_dataTarget");
+				OpenDump();
+
+			if (CurrentDataTarget == null)
+			{
+				//throw new ArgumentNullException("_dataTarget");
+				return;
+			}
 
 			try
 			{
@@ -129,8 +139,15 @@ namespace LiveProcessInspector
 			catch (NullReferenceException ex)
 			{
 				// set error header
+				MessageBox.Show(ex.Message, "Cannot opern CLR window", MessageBoxButton.OK, MessageBoxImage.Error);
+
 				var viewModel2 = new DataTargetViewModel(CurrentDataTarget);
 				ActivateItem(viewModel2);
+				return;
+			}
+			catch (InvalidOperationException ex)
+			{
+				MessageBox.Show("Cannot find CLR in this process", "Cannot open CLR window", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 
@@ -172,7 +189,6 @@ namespace LiveProcessInspector
 				path = dlg.FileName;
 			else
 			{
-				MessageBox.Show("Cannot find such file");
 				return;
 			}
 
@@ -218,5 +234,11 @@ namespace LiveProcessInspector
                 return;
 
         }
+
+		public void About()
+		{
+			var message = String.Format("Author: {1}{0}Kiev, Ukraine{0}{0}Email: Maksym.Chernenko@gmail.com", Environment.NewLine, "Maksym Chernenko");
+			MessageBox.Show(message, "Live Process Inspector About", MessageBoxButton.OK, MessageBoxImage.Information);
+		}
     }
 }
