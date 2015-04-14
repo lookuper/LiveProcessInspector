@@ -16,20 +16,20 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="170"/>
+			<ColumnDefinition Width="120"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		
-		<Label Grid.Row="0" Grid.Column="0" Content="Architecture:"/>
-		<Label Grid.Row="1" Grid.Column="0" Content="Is mini dump:"/>
-		<Label Grid.Row="2" Grid.Column="0" Content="Pointer size:"/>
-		<Label Grid.Row="3" Grid.Column="0" Content="CLR Versions:"/>
+		<Label Grid.Row="0" Grid.Column="0" Height="25" Content="Architecture:"/>
+		<Label Grid.Row="1" Grid.Column="0" Height="25" Content="Is mini dump:"/>
+		<Label Grid.Row="2" Grid.Column="0" Height="25" Content="Pointer size:"/>
+		<Label Grid.Row="3" Grid.Column="0" Height="25" Content="CLR Versions:"/>
 		<Label x:Name="lastLable" Grid.Row="4" Grid.Column="0" Content="Modules:"/>
 		
 		<Label Grid.Row="0" Grid.Column="1" x:Name="Architecture"/>
 		<Label Grid.Row="1" Grid.Column="1" x:Name="IsMiniDump"/>
 		<Label Grid.Row="2" Grid.Column="1" x:Name="PointerSize"/>
-		<ListView Grid.Row="3" Grid.Column="1" x:Name="ClrVersion"
+		<ListView Grid.Row="3" Grid.Column="1" x:Name="ClrVersion" Margin="5"
 				  cal:Message.Attach="[Event MouseDoubleClick] = [Action OpenDacLocation(ClrVersion.SelectedItem)]">
 			<ListView.View>
 				<GridView>

@@ -6,15 +6,19 @@
              xmlns:local="clr-namespace:LiveProcessInspector.Screens"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
+	<UserControl.Resources>
+		<Style x:Key="LabelStyle" TargetType="Label">
+			<Setter Property="Height" Value="25"/>
+		</Style>
+	</UserControl.Resources>
     <Grid Name="root">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		
-		<Border BorderBrush="Black" BorderThickness="1"/>
-		<Grid Grid.Column="0" >
-			
+		<Border BorderBrush="Black" Padding="1" BorderThickness="1"/>
+		<Grid Grid.Column="0"  x:Name="test">			
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
@@ -27,21 +31,24 @@
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="3*"/>
-				<ColumnDefinition Width="7*"/>
+				<ColumnDefinition Width="8*"/>
 			</Grid.ColumnDefinitions>
 			
 			
-			<Label Grid.Row="0" Grid.Column="0" Content="Server GC:"/>
-			<Label Grid.Row="0" Grid.Column="1" x:Name="IsServerGC"/>
+			<Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Server GC:"/>
+			<Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyle}" x:Name="IsServerGC"/>
 				   
-			<Label Grid.Row="1" Grid.Column="0" Content="Pointer Size:"/>
-			<Label Grid.Row="1" Grid.Column="1" x:Name="PointerSize"/>
+			<Label Grid.Row="1" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Pointer Size:"/>
+			<Label Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelStyle}" x:Name="PointerSize"/>
 			
-			<Label Grid.Row="2" Grid.Column="0" Content="Heap Count:"/>
-			<Label Grid.Row="2" Grid.Column="1" x:Name="HeadCount"/>	
+			<Label Grid.Row="2" Grid.Column="0" Style="{StaticResource LabelStyle}"  Content="Heap Count:"/>
+			<Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" x:Name="HeadCount"/>	
 			
-			<Label Grid.Row="3" Grid.Column="0" Content="App Domains:"/>
-			<ListView Grid.Row="3" Grid.Column="1" x:Name="AppDomains">
+			<Label Grid.Row="3" Grid.Column="0" Height="25" Content="App Domains:"/>
+			<ListView Grid.Row="3" Grid.Column="1" 
+					  x:Name="AppDomains"
+					  MaxWidth="{Binding ElementName=Threads, Path=ActualWidth}"		
+					  Padding="5" Margin="5">
 				<ListView.View>
 					<GridView>
 						<GridView.Columns>
@@ -54,7 +61,8 @@
 			</ListView>
 
 			<Label Grid.Row="4" Grid.Column="0" Content="Threads:"/>
-			<ListView Grid.Row="4" Grid.Column="1" x:Name="Threads" HorizontalAlignment="Stretch">
+			<ListView Grid.Row="4" Grid.Column="1" x:Name="Threads"
+					  Padding="5" Margin="5">
 				<ListView.View>
 					<GridView>
 						<GridView.Columns>
@@ -68,7 +76,9 @@
 			</ListView>				
 		</Grid>
 		
+		
 		<Grid Grid.Column="1">
+			<Border BorderBrush="Black" Padding="2" BorderThickness="1"/>
 			<StackPanel>
 				<Expander Header="Selected Thread" IsExpanded="True">
 					<Grid DataContext="{Binding ElementName=Threads, Path=SelectedItem}">
@@ -89,32 +99,79 @@
 							<ColumnDefinition Width="5*"/>
 						</Grid.ColumnDefinitions>
 						
-						<Label Grid.Row="0" Grid.Column="0" Content="Is Alive:"/>
-						<Label Grid.Row="0" Grid.Column="1" Content="{Binding IsAlive}"/>
+						<Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Is Alive:"/>
+						<Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsAlive}"/>
 						
-						<Label Grid.Row="1" Grid.Column="0" Content="Is STA:"/>
-						<Label Grid.Row="1" Grid.Column="1" Content="{Binding IsSTA}"/>		
+						<Label Grid.Row="1" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Is STA:"/>
+						<Label Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsSTA}"/>		
 						
-						<Label Grid.Row="2" Grid.Column="0" Content="Current Exception:"/>
-						<Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentException, TargetNullValue=None}"/>	
+						<Label Grid.Row="2" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Current Exception:"/>
+						<Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding CurrentException, TargetNullValue=None}"/>	
 						
-						<Label Grid.Row="4" Grid.Column="0" Content="Abort Requested:"/>
-						<Label Grid.Row="4" Grid.Column="1" Content="{Binding IsAbortRequested}"/>	
+						<Label Grid.Row="4" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Abort Requested:"/>
+						<Label Grid.Row="4" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsAbortRequested}"/>	
 						
-						<Label Grid.Row="5" Grid.Column="0" Content="Is Aborted:"/>
-						<Label Grid.Row="5" Grid.Column="1" Content="{Binding IsAborted}"/>	
+						<Label Grid.Row="5" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Is Aborted:"/>
+						<Label Grid.Row="5" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsAborted}"/>	
 						
-						<Label Grid.Row="6" Grid.Column="0" Content="Is Background:"/>
-						<Label Grid.Row="6" Grid.Column="1" Content="{Binding IsBackground}"/>	
+						<Label Grid.Row="6" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Is Background:"/>
+						<Label Grid.Row="6" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsBackground}"/>	
 						
-						<Label Grid.Row="7" Grid.Column="0" Content="Is Finalizer:"/>
-						<Label Grid.Row="7" Grid.Column="1" Content="{Binding IsFinalizer}"/>	
+						<Label Grid.Row="7" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Is Finalizer:"/>
+						<Label Grid.Row="7" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsFinalizer}"/>	
 						
-						<Label Grid.Row="8" Grid.Column="0" Content="Is GC:"/>
-						<Label Grid.Row="8" Grid.Column="1" Content="{Binding IsGC}"/>	
+						<Label Grid.Row="8" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Is GC:"/>
+						<Label Grid.Row="8" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsGC}"/>	
 						
-						<Label Grid.Row="9" Grid.Column="0" Content="Is Unstarted:"/>
-						<Label Grid.Row="9" Grid.Column="1" Content="{Binding IsUnstarted}"/>	
+						<Label Grid.Row="9" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Is Unstarted:"/>
+						<Label Grid.Row="9" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IsUnstarted}"/>	
+					</Grid>
+				</Expander>
+								<Expander Header="Thread Pool">
+					<Grid DataContext="{Binding ThreadPool}">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="3*"/>
+							<ColumnDefinition Width="5*"/>
+						</Grid.ColumnDefinitions>
+						
+						<Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Cpu Utilization:"/>
+						<Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding CpuUtilization}"/>
+						
+						<Label Grid.Row="1" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Complition Port Count:"/>
+						<Label Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding FreeCompletionPortCount}"/>	
+						
+						<Label Grid.Row="2" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Idle Thread:"/>
+						<Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding IdleThreads}"/>	
+						
+						<Label Grid.Row="4" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Max Completion Ports:"/>
+						<Label Grid.Row="4" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding MaxCompletionPorts}"/>	
+						
+						<Label Grid.Row="5" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Max Threads:"/>
+						<Label Grid.Row="5" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding MaxThreads}"/>	
+						
+						<Label Grid.Row="6" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Min Completion Ports:"/>
+						<Label Grid.Row="6" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding MinCompletionPorts}"/>	
+						
+						<Label Grid.Row="7" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Min Threads:"/>
+						<Label Grid.Row="7" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding MinThreads}"/>	
+						
+						<Label Grid.Row="8" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Running Threads:"/>
+						<Label Grid.Row="8" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding RunningThreads}"/>	
+						
+						<Label Grid.Row="9" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Total Threads:"/>
+						<Label Grid.Row="9" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding TotalThreads}"/>	
 					</Grid>
 				</Expander>
 				<Expander Header="Object Heap">
@@ -141,53 +198,6 @@
 								</GridView>
 							</ListView.View>							
 						</ListView>
-					</Grid>
-				</Expander>
-				<Expander Header="Thread Pool">
-					<Grid DataContext="{Binding ThreadPool}">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-						</Grid.RowDefinitions>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="3*"/>
-							<ColumnDefinition Width="5*"/>
-						</Grid.ColumnDefinitions>
-						
-						<Label Grid.Row="0" Grid.Column="0" Content="Cpu Utilization:"/>
-						<Label Grid.Row="0" Grid.Column="1" Content="{Binding CpuUtilization}"/>
-						
-						<Label Grid.Row="1" Grid.Column="0" Content="Complition Port Count:"/>
-						<Label Grid.Row="1" Grid.Column="1" Content="{Binding FreeCompletionPortCount}"/>	
-						
-						<Label Grid.Row="2" Grid.Column="0" Content="Idle Thread:"/>
-						<Label Grid.Row="2" Grid.Column="1" Content="{Binding IdleThreads}"/>	
-						
-						<Label Grid.Row="4" Grid.Column="0" Content="Max Completion Ports:"/>
-						<Label Grid.Row="4" Grid.Column="1" Content="{Binding MaxCompletionPorts}"/>	
-						
-						<Label Grid.Row="5" Grid.Column="0" Content="Max Threads:"/>
-						<Label Grid.Row="5" Grid.Column="1" Content="{Binding MaxThreads}"/>	
-						
-						<Label Grid.Row="6" Grid.Column="0" Content="Min Completion Ports:"/>
-						<Label Grid.Row="6" Grid.Column="1" Content="{Binding MinCompletionPorts}"/>	
-						
-						<Label Grid.Row="7" Grid.Column="0" Content="Min Threads:"/>
-						<Label Grid.Row="7" Grid.Column="1" Content="{Binding MinThreads}"/>	
-						
-						<Label Grid.Row="8" Grid.Column="0" Content="Running Threads:"/>
-						<Label Grid.Row="8" Grid.Column="1" Content="{Binding RunningThreads}"/>	
-						
-						<Label Grid.Row="9" Grid.Column="0" Content="Total Threads:"/>
-						<Label Grid.Row="9" Grid.Column="1" Content="{Binding TotalThreads}"/>	
 					</Grid>
 				</Expander>
 			</StackPanel>
