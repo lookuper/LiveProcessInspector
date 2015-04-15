@@ -42,10 +42,13 @@
 			<Label Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelStyle}" x:Name="PointerSize"/>
 			
 			<Label Grid.Row="2" Grid.Column="0" Style="{StaticResource LabelStyle}"  Content="Heap Count:"/>
-			<Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" x:Name="HeadCount"/>	
+			<Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" x:Name="HeadCount"/>
 			
-			<Label Grid.Row="3" Grid.Column="0" Height="25" Content="App Domains:"/>
-			<ListView Grid.Row="3" Grid.Column="1" 
+			<Label Grid.Row="3" Grid.Column="0" Content="Can Walk Heap:"/>
+			<Label Grid.Row="3" Grid.Column="1" Content="{Binding CanWalkHelp}"/>
+			
+			<Label Grid.Row="4" Grid.Column="0" Height="25" Content="App Domains:"/>
+			<ListView Grid.Row="4" Grid.Column="1" 
 					  x:Name="AppDomains"
 					  MaxWidth="{Binding ElementName=Threads, Path=ActualWidth}"		
 					  Padding="5" Margin="5">
@@ -60,8 +63,8 @@
 				</ListView.View>
 			</ListView>
 
-			<Label Grid.Row="4" Grid.Column="0" Content="Threads:"/>
-			<ListView Grid.Row="4" Grid.Column="1" x:Name="Threads"
+			<Label Grid.Row="5" Grid.Column="0" Content="Threads:"/>
+			<ListView Grid.Row="5" Grid.Column="1" x:Name="Threads"
 					  Padding="5" Margin="5">
 				<ListView.View>
 					<GridView>
@@ -174,31 +177,20 @@
 						<Label Grid.Row="9" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding TotalThreads}"/>	
 					</Grid>
 				</Expander>
-				<Expander Header="Object Heap">
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-						</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="3*"/>
-								<ColumnDefinition Width="5*"/>
-						</Grid.ColumnDefinitions>
-						<Label Grid.Row="0" Grid.Column="0" Content="Can Walk Heap:"/>
-						<Label Grid.Row="0" Grid.Column="1" Content="{Binding CanWalkHelp}"/>
-						
-						<ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="HeapObjects">
-							<ListView.View>
-								<GridView>
-									<GridView.Columns>
-										<GridViewColumn Header="Object Id" DisplayMemberBinding="{Binding ObjectId}" />
-										<GridViewColumn Header="Size" DisplayMemberBinding="{Binding Size}" />
-										<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
-									</GridView.Columns>
-								</GridView>
-							</ListView.View>							
-						</ListView>
-					</Grid>
+				<Expander Header="Object Heap" x:Name="ObjectHeapExpander" IsEnabled="{Binding CanWalkHelp}">
+					<ListView x:Name="HeapObjects"
+						MaxWidth="{Binding ElementName=ObjectHeapExpander, Path=ActualWidth}"				  
+						MaxHeight="300">
+						<ListView.View>
+							<GridView>
+								<GridView.Columns>
+									<GridViewColumn Header="Count" DisplayMemberBinding="{Binding Count}" />									
+									<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+									<GridViewColumn Header="Size" DisplayMemberBinding="{Binding Size}" />
+								</GridView.Columns>
+							</GridView>
+						</ListView.View>
+					</ListView>
 				</Expander>
 			</StackPanel>
 		</Grid>

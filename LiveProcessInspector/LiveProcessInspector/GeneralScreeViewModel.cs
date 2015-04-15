@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Resources;
 
@@ -35,8 +36,9 @@ namespace LiveProcessInspector
 
 		public DataTarget CurrentDataTarget;
 		public ClrRuntime CurrentClrRuntime;
+		private IEnumerable<string> _avaliableDumps;
 
-        [ImportingConstructor]
+		[ImportingConstructor]
         public GeneralScreenViewModel(IWindowManager windowManager)
         {
             _windowManager = windowManager;
@@ -64,10 +66,22 @@ namespace LiveProcessInspector
 
 		public void RefreshStatusBar()
 		{
+			var dumpNames = _inspector.GetDumpNames();
+
 			DumpsSize = _inspector.GetAllDumpSize();
-			DumpList = String.Join(Environment.NewLine, _inspector.GetDumpNames());
+			AvaliableDumps = dumpNames;
+			DumpList = String.Join(Environment.NewLine, dumpNames);
 			IsClearButtonEnabled = !String.IsNullOrEmpty(DumpList);
+        }
+
+		public void MenuItemClick(RoutedEventArgs e)
+		{
+			var mItem = e?.OriginalSource as MenuItem;
+			var dumpPath = mItem?.Header as String;
+
+			OpenDump(dumpPath);
 		}
+
 
 		public bool IsClearButtonEnabled
 		{
@@ -79,6 +93,12 @@ namespace LiveProcessInspector
 		{
             get { return _dumpList; }
 			set { _dumpList = value; NotifyOfPropertyChange(() => DumpList); }
+		}
+
+		public IEnumerable<string> AvaliableDumps
+		{
+			get { return _avaliableDumps; }
+			set { _avaliableDumps = value; NotifyOfPropertyChange(() => AvaliableDumps); } 
 		}
 
 		public void DeleteAllDumps()
@@ -178,6 +198,9 @@ namespace LiveProcessInspector
 
 		public void OpenDump()
 		{
+			CurrentDataTarget = null;
+			CurrentClrRuntime = null;
+
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Dump files (*.dmp)|*.dmp";
 			dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -193,6 +216,27 @@ namespace LiveProcessInspector
 			}
 
 			//path = @"C:\Procdump\LiveProcessInspector.vshost.exe_150401_230544.dmp";
+
+			if (_model.TryToOpenDump(path, out CurrentDataTarget))
+			{
+				try
+				{
+					var viewModel2 = new DataTargetViewModel(CurrentDataTarget);
+					ActivateItem(viewModel2);
+				}
+				catch (NullReferenceException ex)
+				{
+					// dump without clr process
+				}
+				catch (ClrDiagnosticsException ex)
+				{ }
+			}
+		}
+
+		private void OpenDump(string path)
+		{
+			if (String.IsNullOrEmpty(path))
+				throw new ArgumentException(nameof(path));
 
 			if (_model.TryToOpenDump(path, out CurrentDataTarget))
 			{

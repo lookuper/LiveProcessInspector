@@ -46,13 +46,18 @@
 					<Label Content="Dump's size:"/>
 					<Label x:Name="DumpsSize"/>
 					<Label Content="MB"/>
-					<Button cal:Message.Attach="[Event Click] = [Action DeleteAllDumps()]" 
-							Padding="5"
-							ToolTip="{Binding DumpList}"
-							Content="Clear" 
-							IsEnabled="{Binding IsClearButtonEnabled}">
-						
-					</Button>
+					<Menu VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"
+						  VerticalAlignment="Center">
+						<MenuItem Header="Recent" x:Name="AvaliableDumps" IsEnabled="{Binding IsClearButtonEnabled}"
+								  cal:Message.Attach="[Event Click] = [Action MenuItemClick($eventArgs)]">
+							<MenuItem.ItemTemplate>
+								<DataTemplate>
+									<Label Content="{Binding}"/>
+								</DataTemplate>
+							</MenuItem.ItemTemplate>
+						</MenuItem>
+						<MenuItem Header="Clear" IsEnabled="{Binding IsClearButtonEnabled}" cal:Message.Attach="[Event Click] = [Action DeleteAllDumps()]"/>
+					</Menu>
 				</StackPanel>
 			</Grid>
         </StatusBar>
