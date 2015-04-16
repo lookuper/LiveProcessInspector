@@ -84,6 +84,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="About\AboutAssemblyDataProvider.cs" />
+    <Compile Include="About\AboutBoxSimple.xaml.cs">
+      <DependentUpon>AboutBoxSimple.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="About\IAboutDataProvider.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -141,6 +146,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="About\AboutBoxSimple.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AvaliableProcessesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +180,7 @@
     <Resource Include="Icons\bug-icon.png" />
     <Resource Include="Icons\target.ico" />
     <Resource Include="Icons\target2.ico" />
+    <Resource Include="Icons\AboutLogo.png" />
     <Content Include="Microsoft.Diagnostics.Runtime.dll" />
     <Content Include="Microsoft.Diagnostics.Runtime.pdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

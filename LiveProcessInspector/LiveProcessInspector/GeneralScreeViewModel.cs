@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using LiveProcessInspector.About;
 using LiveProcessInspector.Screens;
 using LiveProcessInspector.Utils;
 using Microsoft.Diagnostics.Runtime;
@@ -281,8 +282,11 @@ namespace LiveProcessInspector
 
 		public void About()
 		{
-			var message = String.Format("Author: {1}{0}Kiev, Ukraine{0}{0}Email: Maksym.Chernenko@gmail.com", Environment.NewLine, "Maksym Chernenko");
-			MessageBox.Show(message, "Live Process Inspector About", MessageBoxButton.OK, MessageBoxImage.Information);
+			
+			AboutBoxSimple aboutBox = new AboutBoxSimple(Application.Current.MainWindow);
+			aboutBox.ShowDialog();
+			//var message = String.Format("Author: {1}{0}Kiev, Ukraine{0}{0}Email: Maksym.Chernenko@gmail.com", Environment.NewLine, "Maksym Chernenko");
+			//MessageBox.Show(message, "Live Process Inspector About", MessageBoxButton.OK, MessageBoxImage.Information);
 		}
     }
 }

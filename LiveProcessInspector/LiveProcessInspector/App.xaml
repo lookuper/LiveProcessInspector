@@ -1,14 +1,31 @@
 ﻿<Application x:Class="LiveProcessInspector.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LiveProcessInspector">
-    <Application.Resources>
-        <ResourceDictionary>
+			 xmlns:local="clr-namespace:LiveProcessInspector"
+             xmlns:local2="clr-namespace:LiveProcessInspector.About">
+	<Application.Resources>
+		<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <local:AppBootstrapper x:Key="bootstrapper">                        
                     </local:AppBootstrapper>
-                </ResourceDictionary>
+					<local:AboutAssemblyDataProvider x:Key="aboutDataProvider" />
+					<XmlDataProvider x:Key="aboutProvider" XPath="ApplicationInfo" IsAsynchronous="False" IsInitialLoadEnabled="True">
+						<x:XData>
+							<ApplicationInfo xmlns="">
+								<Title>Live Process Inspector About</Title>
+								<Product>LiveProcessInspector</Product>
+								<Company>Company: MC</Company>
+								<Copyright>License: GNU</Copyright>
+								<Description>Application builded around experimental Microsoft.Diagnosctics.Runtime library to show functional.
+									Just for fun.
+								</Description>
+								<Version>0.1.0.0</Version>
+								<Link Uri="http://"></Link>
+							</ApplicationInfo>
+						</x:XData>
+					</XmlDataProvider>
+				</ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
