@@ -5,12 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LiveProcessInspector"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              MinHeight="560" MinWidth="870"				 
 			 >
-    <DockPanel>
-        
-        <ToolBarPanel DockPanel.Dock="Top"  Background="Gainsboro">
+	<DockPanel>
+		<ToolBarPanel DockPanel.Dock="Top"  Background="Gainsboro">
 			<ToolBar ToolBarTray.IsLocked="True">
 				<Button cal:Message.Attach="[Event Click] = [Action OpenDump()]">
                     <Image Source="Icons/open-file-icon.png" ToolTip="Open Dump"></Image>

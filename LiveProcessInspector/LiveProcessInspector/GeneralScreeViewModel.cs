@@ -181,7 +181,7 @@ namespace LiveProcessInspector
 				if (CurrentClrRuntime == null)
 					CurrentClrRuntime = CurrentDataTarget.CreateRuntime(clrVersion.TryGetDacLocation() ?? clrVersion.TryDownloadDac());
 			}
-			catch (ClrDiagnosticsException ex)
+            catch (SystemException ex)
 			{
 				MessageBox.Show("Cannot open CLR runtime, due the: " + ex.Message);
 				return;

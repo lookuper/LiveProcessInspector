@@ -46,6 +46,9 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Code-Optimization-3-128x128.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro">
       <HintPath>..\packages\Caliburn.Micro-Contrib.1.0.2\lib\Net40\Caliburn.Micro.dll</HintPath>
@@ -181,6 +184,9 @@
     <Resource Include="Icons\target.ico" />
     <Resource Include="Icons\target2.ico" />
     <Resource Include="Icons\AboutLogo.png" />
+    <Resource Include="Icons\Code-Optimization-3-128x128.png" />
+    <Resource Include="Icons\Code-Optimization-3-128x128.ico" />
+    <Resource Include="Code-Optimization-3-128x128.ico" />
     <Content Include="Microsoft.Diagnostics.Runtime.dll" />
     <Content Include="Microsoft.Diagnostics.Runtime.pdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
