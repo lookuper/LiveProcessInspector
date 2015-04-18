@@ -47,7 +47,6 @@ namespace LiveProcessInspector
 
 			_originalCursor = Mouse.OverrideCursor;
 			_targetCursor = new Cursor(Application.GetResourceStream(new Uri("Icons/target.ico", UriKind.Relative)).Stream);
-			//OpenClrRuntime();
 			RefreshStatusBar();
         }
 
@@ -82,7 +81,6 @@ namespace LiveProcessInspector
 
 			OpenDump(dumpPath);
 		}
-
 
 		public bool IsClearButtonEnabled
 		{
@@ -143,7 +141,6 @@ namespace LiveProcessInspector
 
 		public void OpenClrRuntime()
 		{
-			//OpenDump(); // to speed up development
 			if (CurrentDataTarget == null)
 				OpenDump();
 
@@ -215,9 +212,7 @@ namespace LiveProcessInspector
 			{
 				return;
 			}
-
-			//path = @"C:\Procdump\LiveProcessInspector.vshost.exe_150401_230544.dmp";
-
+			
 			if (_model.TryToOpenDump(path, out CurrentDataTarget))
 			{
 				try
@@ -255,38 +250,10 @@ namespace LiveProcessInspector
 			}
 		}
 
-
-        public void AttachToProcess()
-        {
-            var avaliableProcessModel = new AvaliableProcessesViewModel(_windowManager);
-            dynamic settings = new ExpandoObject();
-            settings.WindowStyle = WindowStyle.ToolWindow;
-            settings.ShowInTaskbar = false;
-            settings.Title = "Test";
-
-            bool? res = _windowManager.ShowDialog(avaliableProcessModel, null, settings);
-
-            if (res.HasValue && res.Value)
-            {
-                if (_model.TryToAttach(avaliableProcessModel.SelectedProcess, out CurrentDataTarget))
-                {
-                    var location = CurrentDataTarget.ClrVersions[0].TryGetDacLocation();
-                    //var runtime = _dataTarget.CreateRuntime(location);
-                }
-
-            }
-            else
-                return;
-
-        }
-
 		public void About()
-		{
-			
+		{			
 			AboutBoxSimple aboutBox = new AboutBoxSimple(Application.Current.MainWindow);
 			aboutBox.ShowDialog();
-			//var message = String.Format("Author: {1}{0}Kiev, Ukraine{0}{0}Email: Maksym.Chernenko@gmail.com", Environment.NewLine, "Maksym Chernenko");
-			//MessageBox.Show(message, "Live Process Inspector About", MessageBoxButton.OK, MessageBoxImage.Information);
 		}
     }
 }

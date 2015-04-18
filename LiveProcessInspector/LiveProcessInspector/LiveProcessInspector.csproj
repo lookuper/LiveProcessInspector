@@ -114,10 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="AvaliableProcessesView.xaml.cs">
-      <DependentUpon>AvaliableProcessesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AvaliableProcessesViewModel.cs" />
     <Compile Include="GeneralScreenView.xaml.cs">
       <DependentUpon>GeneralScreenView.xaml</DependentUpon>
     </Compile>
@@ -153,10 +149,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AvaliableProcessesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GeneralScreenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,6 +167,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="screenshots\clrRuntime.png" />
+    <Resource Include="screenshots\dataTargetView.png" />
+    <Resource Include="screenshots\mainPage.png" />
+    <Resource Include="screenshots\simpleObjectHeap.png" />
     <Resource Include="Icons\open-file-icon.png" />
     <Resource Include="Icons\Target-icon.png" />
     <Resource Include="Icons\Show-Property-icon.png" />
