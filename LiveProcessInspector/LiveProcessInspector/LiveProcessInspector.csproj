@@ -167,6 +167,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="screenshots\dumpAppScreenCast.gif" />
     <Resource Include="screenshots\clrRuntime.png" />
     <Resource Include="screenshots\dataTargetView.png" />
     <Resource Include="screenshots\mainPage.png" />
