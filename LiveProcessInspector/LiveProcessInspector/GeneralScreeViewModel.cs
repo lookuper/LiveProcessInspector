@@ -43,7 +43,7 @@ namespace LiveProcessInspector
         public GeneralScreenViewModel(IWindowManager windowManager)
         {
             _windowManager = windowManager;
-			DisplayName = "Live Process Inspector v0.1 alpha";
+			DisplayName = "Live Process Inspector v1.0";
 
 			_originalCursor = Mouse.OverrideCursor;
 			_targetCursor = new Cursor(Application.GetResourceStream(new Uri("Icons/target.ico", UriKind.Relative)).Stream);
