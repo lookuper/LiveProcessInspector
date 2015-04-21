@@ -33,17 +33,17 @@ namespace InvestigationApp
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-			Task.Run(() =>
+			Task.Factory.StartNew(() =>
 			{
 				Thread.Sleep(TimeSpan.FromSeconds(30));
 				i = 2;
 			});
 
-			Task.Delay(TimeSpan.FromSeconds(30))
-				.ContinueWith((res) =>
-				{
-					i = 3;
-				});
+			//Task.Delay(TimeSpan.FromSeconds(30))
+			//	.ContinueWith((res) =>
+			//	{
+			//		i = 3;
+			//	});
 
 			var newDomain = AppDomain.CreateDomain("newDomain");
 			var anotherThread = new Thread(new ThreadStart(() =>

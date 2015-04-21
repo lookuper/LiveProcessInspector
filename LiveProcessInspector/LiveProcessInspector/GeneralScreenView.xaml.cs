@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +31,9 @@ namespace LiveProcessInspector
 		{
 			window = Window.GetWindow(this);
 
-			Task.Delay(TimeSpan.FromMilliseconds(100)).ContinueWith(res =>
+			//Task.Delay(TimeSpan.FromMilliseconds(100))
+				
+			Delay(100).ContinueWith(res =>
 			{
 				window.WindowState = WindowState.Normal;
 			}, TaskScheduler.FromCurrentSynchronizationContext());
@@ -40,6 +43,13 @@ namespace LiveProcessInspector
 		{
 			window = Window.GetWindow(this);
 			window.WindowState = WindowState.Minimized;
+		}
+
+		private static Task Delay(int milliseconds)		// Asynchronous NON-BLOCKING method
+		{
+			var tcs = new TaskCompletionSource<object>();
+			new Timer(_ => tcs.SetResult(null)).Change(milliseconds, -1);
+			return tcs.Task;
 		}
 	}
 }
