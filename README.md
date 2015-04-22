@@ -30,7 +30,8 @@ application domains, application threads)
 
 ### Requirenments
 - Windows 7-8.1
-- .NET Framework 4.6 (can be rebuilded to 4.0)
+- .NET Framework 4.6 
+- [*version rebuilded for .NET 4.0](LiveProcessInspector/Release/LiveProcessInspector_v1_net40.rar)
 
 ### Dependencies
 - Caliburn.Micro
