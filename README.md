@@ -26,7 +26,7 @@ application domains, application threads)
 ![Alt text](/LiveProcessInspector/LiveProcessInspector/screenshots/simpleObjectHeap.png)
 
 ## Typical usage
-![demo] (LiveProcessInspector/LiveProcessInspector/screenshots/dumpAppScreenCast.gif)
+![demo](LiveProcessInspector/LiveProcessInspector/screenshots/dumpAppScreenCast.gif)
 
 ### Requirenments
 - Windows 7-8.1
